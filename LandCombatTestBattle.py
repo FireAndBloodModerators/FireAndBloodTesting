@@ -95,7 +95,7 @@ class Battle:
             Result (int): Result of the battle, 1 for Force 1 winning, 2 for Force 2 winning, or 0 for errors.
         """
         self.reset_forces()
-        while(self.Force1.Morale > 0 & self.Force2.Morale > 0):
+        while((self.Force1.Morale > 0) & (self.Force2.Morale > 0)):
             Force1Roll = self.land_combat_roll(self.Force1)
             Force2Roll = self.land_combat_roll(self.Force2)
             if(Force1Roll > Force2Roll):
@@ -108,11 +108,11 @@ class Battle:
                 self.round_casualties(self.Force2,self.Force1)
             else:
                 pass
-        if(self.Force1.Morale > 0 & self.Force2.Morale <= 0):
+        if((self.Force1.Morale > 0) & (self.Force2.Morale <= 0)):
             print("Force 1 is victorious.")
             Result = 1
             return Result
-        elif(self.Force2.Morale > 0 & self.Force1.Morale <= 0):
+        elif((self.Force2.Morale > 0) & (self.Force1.Morale <= 0)):
             print("Force 2 is victorious.")
             Result = 2
             return Result

@@ -8,10 +8,11 @@ LevyNumbers = [100,200,300,400,500,600]
 
 ## Iterate through the LevyNumbers list to create 2 forces and simulate battle between them
 for LevyNumber1 in LevyNumbers:
-    ### Create Force 1
-    Force1 = Force(0,LevyNumber1)
-
     for LevyNumber2 in LevyNumbers:
+        ### Create Force 1
+        print(LevyNumber1)
+        Force1 = Force(0,LevyNumber1)
+        print(LevyNumber2)
         ### Create Force 2
         Force2 = Force(0,LevyNumber2)
 
@@ -22,12 +23,12 @@ for LevyNumber1 in LevyNumbers:
         Force2Casualties = 0
 
         ### Create battle between Force 1 and 2
-        Battle = Battle(Force1,Force2)
+        TestBattle = Battle(Force1,Force2)
 
         ### Run sims 10,000 times
         for x in range(10000):
             ### Run battle between Force 1 and 2
-            BattleResult = Battle.battle()
+            BattleResult = TestBattle.battle()
 
             ### Increment win count of winner of the battle
             if(BattleResult == 1):
