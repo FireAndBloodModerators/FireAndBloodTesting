@@ -11,6 +11,7 @@ class Force:
         Combat_Value (int): The combat strength of troops in the force.
         Morale (int): The morale/fighting spirit of troops in the force.
         Retreat_Threshold (int): The morale at which the force will retreat at.
+        Casualties (int): Percentage of troops lost in battle.
         Strength_Bonus (int): The bonus to combat rolls received the force having greater strength than the enemy.
         Terrain_Bonus (int): The bonus to combat rolls received from the terrain the force is fighting in.
         Skill_Bonus (int): The bonus to combat rolls received from the force's commander.
@@ -29,6 +30,7 @@ class Force:
         self.calculate_combat_value(self.MaA,self.Levies)
         self.Morale = 100
         self.Retreat_Threshold = 0
+        self.Casualties = 0
         self.Strength_Bonus = 0
         self.Terrain_Bonus = 0
         self.Skill_Bonus = 0

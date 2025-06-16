@@ -57,7 +57,7 @@ class Battle:
         Combat_Roll = random.randint(1,50) + random.randint(1,50) + Force.Strength_Bonus + Force.Terrain_Bonus + Force.Skill_Bonus
         return Combat_Roll
     
-    def morale_damage(self,Force:Force,Damage:int):
+    def round_morale_damage(self,Force:Force,Damage:int):
         """
         Function to reduce a force's morale by the damage dealt in a combat round.
     
@@ -67,10 +67,56 @@ class Battle:
         """
         Force.Morale = Force.Morale - Damage
 
-    def battle(self):
+    def round_casualties(self,Winner:Force,Loser:Force):
+        """
+        Function to increase a force's battle casualties based.
+    
+        Arguments:
+            Force (Force): The Force that is taking damage.
+            Damage (int): The damage dealt in the combat round to the force.
+        """
+        Winner.Casualties = Winner.Casualties + random.randint(1,3)
+        Loser.Casualties = Loser.Casualties + random.randint(1,3) + 3
+
+    def reset_forces(self):
+        """
+        Function to reduce a force's morale by the damage dealt in a combat round.
+        """
+        self.Force1.Morale = 100
+        self.Force1.Casualties = 0
+        self.Force2.Morale = 100
+        self.Force2.Casualties = 0
+
+    def battle(self) -> int:
         """
         Function to roll a battle between two forces.
 
         Returns:
-            Result (int): Result of the battle, 1 for Force 1 winning or 2 for Force 2 winning.
+            Result (int): Result of the battle, 1 for Force 1 winning, 2 for Force 2 winning, or 0 for errors.
         """
+        self.reset_forces()
+        while(self.Force1.Morale > 0 & self.Force2.Morale > 0):
+            Force1Roll = self.land_combat_roll(self.Force1)
+            Force2Roll = self.land_combat_roll(self.Force2)
+            if(Force1Roll > Force2Roll):
+                Damage = Force1Roll - Force2Roll
+                self.round_morale_damage(self.Force2,Damage)
+                self.round_casualties(self.Force1,self.Force2)
+            elif(Force2Roll > Force1Roll):
+                Damage = Force2Roll - Force1Roll
+                self.round_morale_damage(self.Force1,Damage)
+                self.round_casualties(self.Force2,self.Force1)
+            else:
+                pass
+        if(self.Force1.Morale > 0 & self.Force2.Morale <= 0):
+            print("Force 1 is victorious.")
+            Result = 1
+            return Result
+        elif(self.Force2.Morale > 0 & self.Force1.Morale <= 0):
+            print("Force 2 is victorious.")
+            Result = 2
+            return Result
+        else:
+            print("Error")
+            Result = 0
+            return Result
