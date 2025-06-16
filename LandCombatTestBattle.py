@@ -109,11 +109,9 @@ class Battle:
             else:
                 pass
         if((self.Force1.Morale > 0) & (self.Force2.Morale <= 0)):
-            print("Force 1 is victorious.")
             Result = 1
             return Result
         elif((self.Force2.Morale > 0) & (self.Force1.Morale <= 0)):
-            print("Force 2 is victorious.")
             Result = 2
             return Result
         else:
