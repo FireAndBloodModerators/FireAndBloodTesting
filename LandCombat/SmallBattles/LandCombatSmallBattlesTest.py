@@ -81,5 +81,5 @@ WinPercentageDataFrame = pd.DataFrame(WinPercentageResults,columns=ColumnLabels,
 CasualtyDataFrame = pd.DataFrame(CasualtyResults,columns=ColumnLabels,)
 
 ## Save dataframes to csv file
-WinPercentageDataFrame.to_csv("LandCombat/SmallBattles/land_combat_small_battle_win_percentages.csv",index=False)
-CasualtyDataFrame.to_csv("LandCombat/SmallBattles/land_combat_small_battle_casualties.csv",index=False)
+WinPercentageDataFrame.to_csv("land_combat_small_battle_win_percentages.csv",index=False)
+CasualtyDataFrame.to_csv("land_combat_small_battle_casualties.csv",index=False)
