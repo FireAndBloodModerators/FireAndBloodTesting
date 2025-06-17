@@ -44,7 +44,7 @@ class Battle:
         else:
             pass
 
-    def land_combat_roll(self,Force:Force) -> int:
+    def land_combat_roll(self,RollingForce:Force) -> int:
         """
         Function to roll 2d50 and add a force's bonuses.
     
@@ -54,29 +54,39 @@ class Battle:
         Returns:
             Combat_Roll (int): The 2d50 roll plus a force's bonuses.
         """
-        Combat_Roll = random.randint(1,50) + random.randint(1,50) + Force.Strength_Bonus + Force.Terrain_Bonus + Force.Skill_Bonus
+        Combat_Roll = random.randint(1,50) + random.randint(1,50) + RollingForce.Strength_Bonus + RollingForce.Terrain_Bonus + RollingForce.Skill_Bonus
         return Combat_Roll
     
-    def round_morale_damage(self,Force:Force,Damage:int):
+    def round_morale_damage(self,DamagedForce:Force,Damage:int):
         """
         Function to reduce a force's morale by the damage dealt in a combat round.
     
         Arguments:
-            Force (Force): The Force that is taking damage.
+            DamagedForce (Force): The Force that is taking damage.
             Damage (int): The damage dealt in the combat round to the force.
         """
-        Force.Morale = Force.Morale - Damage
+        DamagedForce.Morale = DamagedForce.Morale - Damage
 
     def round_casualties(self,Winner:Force,Loser:Force):
         """
         Function to increase a force's battle casualties based.
     
         Arguments:
-            Force (Force): The Force that is taking damage.
-            Damage (int): The damage dealt in the combat round to the force.
+            Winner (Force): The force that won the battle round.
+            Loser (Force): The force that lost the battle round.
         """
         Winner.Casualties = Winner.Casualties + 1
         Loser.Casualties = Loser.Casualties + random.randint(1,3) + 1
+
+    def attempt_retreat(self,RetreatingForce:Force):
+        """
+        Function to reduce a force's morale by the damage dealt in a combat round.
+
+        Arguments:
+            RetreatingForce (Force): The force that is attempting to retreat.
+        """
+        if(RetreatingForce.Morale > 0):
+            RetreatThreshold = (8)
 
     def reset_forces(self):
         """
@@ -95,7 +105,7 @@ class Battle:
             Result (int): Result of the battle, 1 for Force 1 winning, 2 for Force 2 winning, or 0 for errors.
         """
         self.reset_forces()
-        while((self.Force1.Morale > 0) & (self.Force2.Morale > 0)):
+        while((self.Force1.Morale > self.Force1.Retreat_Threshold) & (self.Force2.Morale > self.Force2.Retreat_Threshold)):
             Force1Roll = self.land_combat_roll(self.Force1)
             Force2Roll = self.land_combat_roll(self.Force2)
             if(Force1Roll > Force2Roll):
@@ -108,10 +118,10 @@ class Battle:
                 self.round_casualties(self.Force2,self.Force1)
             else:
                 pass
-        if((self.Force1.Morale > 0) & (self.Force2.Morale <= 0)):
+        if((self.Force1.Morale > self.Force1.Retreat_Threshold) & (self.Force2.Morale <= self.Force2.Retreat_Threshold)):
             Result = 1
             return Result
-        elif((self.Force2.Morale > 0) & (self.Force1.Morale <= 0)):
+        elif((self.Force2.Morale > self.Force2.Retreat_Threshold) & (self.Force1.Morale <= self.Force1.Retreat_Threshold)):
             Result = 2
             return Result
         else:
