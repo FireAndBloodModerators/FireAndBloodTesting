@@ -5,7 +5,7 @@ from LandCombatSmallBattlesTestBattle import Battle
 
 # TEST
 ## Create list of levy numbers for testing use
-LevyNumbers = [100,200,300,400,500,600]
+LevyNumbers = [100,200,300,400,500,600,700]
 
 ## Create
 
@@ -74,12 +74,12 @@ for LevyNumber1 in LevyNumbers:
     CasualtyResults.append(NewCasualtyPercentageResults)
 
     ### Checkpoint
-    print(f"{LevyNumber1} simulations complete")
+    print(f"{LevyNumber1} CV simulations complete")
 
 ## Save results to dataframe
 WinPercentageDataFrame = pd.DataFrame(WinPercentageResults,columns=ColumnLabels,)
 CasualtyDataFrame = pd.DataFrame(CasualtyResults,columns=ColumnLabels,)
 
 ## Save dataframes to csv file
-WinPercentageDataFrame.to_csv("land_combat_small_battle_win_percentages.csv",index=False)
-CasualtyDataFrame.to_csv("land_combat_small_battle_casualties.csv",index=False)
+WinPercentageDataFrame.to_csv("LandCombat/SmallBattles/land_combat_small_battle_win_percentages.csv",index=False)
+CasualtyDataFrame.to_csv("LandCombat/SmallBattles/land_combat_small_battle_casualties.csv",index=False)
