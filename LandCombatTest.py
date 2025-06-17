@@ -1,4 +1,5 @@
 # IMPORTS
+import pandas as pd
 from LandCombatTestForce import Force
 from LandCombatTestBattle import Battle
 
