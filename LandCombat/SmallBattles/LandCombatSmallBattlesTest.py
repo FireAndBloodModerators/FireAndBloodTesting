@@ -5,9 +5,10 @@ from LandCombatSmallBattlesTestBattle import Battle
 
 # TEST
 ## Create list of levy numbers for testing use
-LevyNumbers = [100,200,300,400,500,600,700]
+LevyNumbers = [100,150,200,250,300,350,400,450,500,550,600,650,700]
 
-## Create
+## Create list of retreat thresholds for testing use
+RetreatThresholds = [95,90,80,70,60,50,40,30,20,10]
 
 ## Create column labels for later use
 ColumnLabels = [f"{LevyNumber} CV" for LevyNumber in LevyNumbers]

@@ -78,6 +78,16 @@ class Battle:
         Winner.Casualties = Winner.Casualties + 1
         Loser.Casualties = Loser.Casualties + random.randint(1,3) + 1
 
+    def reduce_casualties(self,ReducedCasualtiesForce:Force):
+        """
+        Function to reduce a force's casualties taken based on its Strength Bonus.
+
+        Arguments:
+            ReducedCasualtiesForce (Force): The force that is having its casualties reduced.
+        """
+        CasualtyReductionAmount = (ReducedCasualtiesForce.Strength_Bonus * 5) if ((ReducedCasualtiesForce.Strength_Bonus * 5) < 50) else 50
+        ReducedCasualtiesForce.Casualties = round(ReducedCasualtiesForce.Casualties * (1 - (CasualtyReductionAmount/100)))
+
     def attempt_retreat(self,RetreatingForce:Force):
         """
         Function to reduce a force's morale by the damage dealt in a combat round.
@@ -118,6 +128,12 @@ class Battle:
                 self.round_casualties(self.Force2,self.Force1)
             else:
                 pass
+        if(self.Force1.Strength_Bonus > self.Force2.Strength_Bonus):
+            self.reduce_casualties(self.Force1)
+        elif(self.Force2.Strength_Bonus > self.Force1.Strength_Bonus):
+            self.reduce_casualties(self.Force2)
+        else:
+            pass
         if((self.Force1.Morale > self.Force1.Retreat_Threshold) & (self.Force2.Morale <= self.Force2.Retreat_Threshold)):
             Result = 1
             return Result

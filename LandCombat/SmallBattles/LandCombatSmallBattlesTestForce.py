@@ -31,7 +31,7 @@ class Force:
         self.calculate_combat_value(self.MaA,self.Levies)
         self.Morale = 100
         self.Retreat_Threshold = 0
-        self.Speed = self.calculate_speed(self.MaA,self.Levies)
+        # self.Speed = self.calculate_speed(self.MaA,self.Levies)
         self.Casualties = 0
         self.Strength_Bonus = 0
         self.Terrain_Bonus = 0
