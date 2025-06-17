@@ -75,8 +75,8 @@ class Battle:
             Force (Force): The Force that is taking damage.
             Damage (int): The damage dealt in the combat round to the force.
         """
-        Winner.Casualties = Winner.Casualties + random.randint(1,3)
-        Loser.Casualties = Loser.Casualties + random.randint(1,3) + 3
+        Winner.Casualties = Winner.Casualties + 1
+        Loser.Casualties = Loser.Casualties + random.randint(1,3) + 1
 
     def reset_forces(self):
         """
