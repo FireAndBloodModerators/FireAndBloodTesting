@@ -1,11 +1,13 @@
 # IMPORTS
 import pandas as pd
-from LandCombatTestForce import Force
-from LandCombatTestBattle import Battle
+from LandCombatSmallBattlesTestForce import Force
+from LandCombatSmallBattlesTestBattle import Battle
 
 # TEST
 ## Create list of levy numbers for testing use
 LevyNumbers = [100,200,300,400,500,600]
+
+## Create
 
 ## Create column labels for later use
 ColumnLabels = [f"{LevyNumber} CV" for LevyNumber in LevyNumbers]

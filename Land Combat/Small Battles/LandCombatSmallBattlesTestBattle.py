@@ -1,7 +1,7 @@
 # IMPORTS
 import math
 import random
-from LandCombatTestForce import Force
+from LandCombatSmallBattlesTestForce import Force
 
 # CLASS
 class Battle:
