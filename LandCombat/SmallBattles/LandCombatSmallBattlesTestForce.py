@@ -18,7 +18,7 @@ class Force:
         Skill_Bonus (int): The bonus to combat rolls received from the force's commander.
     """
 
-    def __init__(self,MaA:int,Levies:int):
+    def __init__(self,MaA:int,Levies:int,RetreatThreshold:int):
         """
         Initialiser function for Land Combat Forces.
     
@@ -30,8 +30,8 @@ class Force:
         self.Levies = Levies
         self.calculate_combat_value(self.MaA,self.Levies)
         self.Morale = 100
-        self.Retreat_Threshold = 0
-        # self.Speed = self.calculate_speed(self.MaA,self.Levies)
+        self.Retreat_Threshold = RetreatThreshold
+        self.Speed = self.calculate_speed(self.MaA,self.Levies)
         self.Casualties = 0
         self.Strength_Bonus = 0
         self.Terrain_Bonus = 0
@@ -47,7 +47,7 @@ class Force:
         """
         self.Combat_Value = (MaA*3) + Levies
 
-    def calculate_speed(self,MaA:int,Levies:int):
+    def calculate_speed(self,MaA:int,Levies:int) -> int:
         """
         Function to calculate speed of a force.
     
@@ -55,4 +55,30 @@ class Force:
             MaA (int): The number of Men-at-Arms (MaA) in the force.
             Levies (int): The number of Levies in the force.
         """
-        self.Combat_Value = (MaA*3) + Levies
+        TotalTroops = MaA + Levies
+        if(Levies == 0):
+            if(TotalTroops <= 20):
+                return 16
+            elif(TotalTroops <= 100):
+                return 14
+            elif(TotalTroops <= 1000):
+                return 12
+            elif(TotalTroops <= 15000):
+                return 10
+            elif(TotalTroops <= 30000):
+                return 8
+            else:
+                return 6
+        else:
+            if(TotalTroops <= 20):
+                return 14
+            elif(TotalTroops <= 100):
+                return 12
+            elif(TotalTroops <= 1000):
+                return 10
+            elif(TotalTroops <= 15000):
+                return 8
+            elif(TotalTroops <= 30000):
+                return 6
+            else:
+                return 4

@@ -88,15 +88,20 @@ class Battle:
         CasualtyReductionAmount = (ReducedCasualtiesForce.Strength_Bonus * 5) if ((ReducedCasualtiesForce.Strength_Bonus * 5) < 50) else 50
         ReducedCasualtiesForce.Casualties = round(ReducedCasualtiesForce.Casualties * (1 - (CasualtyReductionAmount/100)))
 
-    def attempt_retreat(self,RetreatingForce:Force):
+    def attempt_retreat(self,RetreatingForce:Force,NonRetreatingForce:Force):
         """
-        Function to reduce a force's morale by the damage dealt in a combat round.
+        Function to trigger a retreat or a rout for a defeated force.
 
         Arguments:
             RetreatingForce (Force): The force that is attempting to retreat.
         """
         if(RetreatingForce.Morale > 0):
-            RetreatThreshold = (8)
+            RetreatThreshold = 8 + NonRetreatingForce.Speed - RetreatingForce.Speed
+            RetreatRoll = random.randint(1,20)
+            if(RetreatRoll < RetreatThreshold):
+                RetreatingForce.Casualties = RetreatingForce.Casualties + 5
+        else:
+            RetreatingForce.Casualties = RetreatingForce.Casualties + 15
 
     def reset_forces(self):
         """
@@ -135,9 +140,11 @@ class Battle:
         else:
             pass
         if((self.Force1.Morale > self.Force1.Retreat_Threshold) & (self.Force2.Morale <= self.Force2.Retreat_Threshold)):
+            self.attempt_retreat(self.Force2,self.Force1)
             Result = 1
             return Result
         elif((self.Force2.Morale > self.Force2.Retreat_Threshold) & (self.Force1.Morale <= self.Force1.Retreat_Threshold)):
+            self.attempt_retreat(self.Force1,self.Force2)
             Result = 2
             return Result
         else:
