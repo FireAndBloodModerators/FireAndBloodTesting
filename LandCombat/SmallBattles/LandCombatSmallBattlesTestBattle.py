@@ -99,9 +99,9 @@ class Battle:
             RetreatThreshold = 8 + NonRetreatingForce.Speed - RetreatingForce.Speed
             RetreatRoll = random.randint(1,20)
             if(RetreatRoll < RetreatThreshold):
-                RetreatingForce.Casualties = RetreatingForce.Casualties + 5
+                RetreatingForce.Casualties = RetreatingForce.Casualties + random.randint(1,5) + random.randint(1,5)
         else:
-            RetreatingForce.Casualties = RetreatingForce.Casualties + 15
+            RetreatingForce.Casualties = RetreatingForce.Casualties + random.randint(1,10) + random.randint(1,10) + random.randint(1,10) + 5
 
     def reset_forces(self):
         """
