@@ -65,7 +65,7 @@ class Battle:
             DamagedForce (Force): The Force that is taking damage.
             Damage (int): The damage dealt in the combat round to the force.
         """
-        DamagedForce.Morale = DamagedForce.Morale - Damage
+        DamagedForce.Morale -= Damage
 
     def round_casualties(self,Winner:Force,Loser:Force):
         """
@@ -75,8 +75,8 @@ class Battle:
             Winner (Force): The force that won the battle round.
             Loser (Force): The force that lost the battle round.
         """
-        Winner.Casualties = Winner.Casualties + 1
-        Loser.Casualties = Loser.Casualties + random.randint(1,3) + 1
+        Winner.Casualties += 1
+        Loser.Casualties += (random.randint(1,3) + 1)
 
     def reduce_casualties(self,ReducedCasualtiesForce:Force):
         """
@@ -99,9 +99,9 @@ class Battle:
             RetreatThreshold = 8 + NonRetreatingForce.Speed - RetreatingForce.Speed
             RetreatRoll = random.randint(1,20)
             if(RetreatRoll < RetreatThreshold):
-                RetreatingForce.Casualties = RetreatingForce.Casualties + random.randint(1,5) + random.randint(1,5)
+                RetreatingForce.Casualties += (random.randint(1,5) + random.randint(1,5))
         else:
-            RetreatingForce.Casualties = RetreatingForce.Casualties + random.randint(1,10) + random.randint(1,10) + random.randint(1,10) + 5
+            RetreatingForce.Casualties += (random.randint(1,10) + random.randint(1,10) + random.randint(1,10) + 5)
 
     def reset_forces(self):
         """

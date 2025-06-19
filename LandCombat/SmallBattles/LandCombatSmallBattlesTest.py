@@ -54,15 +54,15 @@ for LevyNumber1 in LevyNumbers:
 
                     ###### Increment win count of winner of the battle
                     if(BattleResult == 1):
-                        Force1Wins = Force1Wins + 1
+                        Force1Wins += 1
                     elif(BattleResult == 2):
-                        Force2Wins = Force2Wins + 1
+                        Force2Wins += 1
                     else:
                         pass
 
                     ###### Increment casualty count of both sides
-                    Force1Casualties = Force1Casualties + Force1.Casualties
-                    Force2Casualties = Force2Casualties + Force2.Casualties
+                    Force1Casualties += Force1.Casualties
+                    Force2Casualties += Force2.Casualties
 
                 ##### Calculate win percentage and average casualties of each force
                 Force1WinPercentage = round((Force1Wins/SimulationCount)*100,2)
