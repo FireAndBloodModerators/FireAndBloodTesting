@@ -13,7 +13,7 @@ class Force:
         Retreat_Threshold (int): The morale at which the force will retreat at.
         Speed (int): The speed at which the force moves at.
         Casualties (int): Percentage of troops lost in battle.
-        Strength_Bonus (int): The bonus to combat rolls received the force having greater strength than the enemy.
+        Strength_Bonus (int): The bonus to combat rolls received from the force having greater strength than the enemy.
         Terrain_Bonus (int): The bonus to combat rolls received from the terrain the force is fighting in.
         Skill_Bonus (int): The bonus to combat rolls received from the force's commander.
     """
