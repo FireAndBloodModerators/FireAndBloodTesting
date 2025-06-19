@@ -20,7 +20,7 @@ class Force:
 
     def __init__(self,MaA:int,Levies:int,RetreatThreshold:int):
         """
-        Initialiser function for Land Combat Forces.
+        Initialiser function for a Land Combat force.
     
         Arguments:
             MaA (int): The number of Men-at-Arms (MaA) in the force.
