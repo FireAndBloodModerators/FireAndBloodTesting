@@ -25,6 +25,7 @@ class Force:
         Arguments:
             MaA (int): The number of Men-at-Arms (MaA) in the force.
             Levies (int): The number of Levies in the force.
+            RetreatThreshold (int): The Morale at which the force will retreat.
         """
         self.MaA = MaA
         self.Levies = Levies
