@@ -28,7 +28,7 @@ class Force:
         """
         self.MaA = MaA
         self.Levies = Levies
-        self.calculate_combat_value(self.MaA,self.Levies)
+        self.Combat_Value = self.calculate_combat_value(self.MaA,self.Levies)
         self.Morale = 100
         self.Retreat_Threshold = RetreatThreshold
         self.Speed = self.calculate_speed(self.MaA,self.Levies)
@@ -37,7 +37,7 @@ class Force:
         self.Terrain_Bonus = 0
         self.Skill_Bonus = 0
 
-    def calculate_combat_value(self,MaA:int,Levies:int):
+    def calculate_combat_value(self,MaA:int,Levies:int) -> int:
         """
         Function to calculate combat value (CV) of a force's troops.
     
@@ -45,7 +45,7 @@ class Force:
             MaA (int): The number of Men-at-Arms (MaA) in the force.
             Levies (int): The number of Levies in the force.
         """
-        self.Combat_Value = (MaA*3) + Levies
+        return (MaA*3) + Levies
 
     def calculate_speed(self,MaA:int,Levies:int) -> int:
         """
