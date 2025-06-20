@@ -17,6 +17,7 @@ class Flank:
         Terrain_Bonus (int): The bonus to combat rolls received from the terrain the flank is fighting in.
         Skill_Bonus (int): The bonus to combat rolls received from the flank's commander.
         Target (str): The enemy flank the flank is targetting.
+        Defeated (bool): Whether or not the flank has been defeated.
     """
 
     def __init__(self,MaA:int,Levies:int):
@@ -38,6 +39,7 @@ class Flank:
         self.Terrain_Bonus = 0
         self.Skill_Bonus = 0
         self.Target = None
+        self.Defeated = False
 
     def calculate_combat_value(self,MaA:int,Levies:int) -> int:
         """
