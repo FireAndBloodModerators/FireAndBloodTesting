@@ -19,19 +19,18 @@ class Flank:
         Target (str): The enemy flank the flank is targetting.
     """
 
-    def __init__(self,MaA:int,Levies:int,Morale:int):
+    def __init__(self,MaA:int,Levies:int):
         """
         Initialiser function for a Land Combat force's flank.
     
         Arguments:
             MaA (int): The number of Men-at-Arms (MaA) in the flank.
             Levies (int): The number of Levies in the flank.
-            Morale (int): The starting Morale of the flank.
         """
         self.MaA = MaA
         self.Levies = Levies
         self.Combat_Value = self.calculate_combat_value(self.MaA,self.Levies)
-        self.Morale = Morale
+        self.Morale = 100
         self.Retreat_Threshold = 0
         self.Speed = self.calculate_speed(self.MaA,self.Levies)
         self.Casualties = 0
