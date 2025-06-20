@@ -1,5 +1,6 @@
 # IMPORTS
 import math
+from LandCombatLargeBattlesTestFlank import Flank
 
 # CLASS
 class Force:
@@ -15,6 +16,9 @@ class Force:
         CentreLevies (int): The number of Levies predetermined to be in the centre flank. Default None.
         RightMaA (int): The number of Men-at-Arms (MaA) predetermined to be in the right flank. Default None.
         RightLevies (int): The number of Levies predetermined to be in the right flank. Default None.
+        LeftFlank (Flank): The left flank of the force.
+        CentreFlank (Flank): The left flank of the force.
+        RightFlank (Flank): The left flank of the force.
     """
 
     def __init__(self,MaA:int,Levies:int,LeftMaA: int|None = None,LeftLevies: int|None = None,CentreMaA: int|None = None,CentreLevies: int|None = None,RightMaA: int|None = None,RightLevies: int|None = None):
@@ -34,6 +38,9 @@ class Force:
         self.MaA = MaA
         self.Levies = Levies
         self.assign_flank_troops(LeftMaA,LeftLevies,CentreMaA,CentreLevies,RightMaA,RightLevies)
+        self.LeftFlank = Flank(self.LeftMaA,self.LeftLevies)
+        self.CentreFlank = Flank(self.CentreMaA,self.CentreLevies)
+        self.RightFlank = Flank(self.RightMaA,self.CentreLevies)
     
     def assign_flank_troops(self,LeftMaA: int|None,LeftLevies: int|None,CentreMaA: int|None,CentreLevies: int|None,RightMaA: int|None,RightLevies: int|None):
         """
