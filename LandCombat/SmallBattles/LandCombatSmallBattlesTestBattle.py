@@ -96,7 +96,7 @@ class Battle:
             RetreatingForce (Force): The force that is attempting to retreat.
         """
         if(RetreatingForce.Morale > 0):
-            RetreatThreshold = 8 + NonRetreatingForce.Speed - RetreatingForce.Speed
+            RetreatThreshold = 10 + NonRetreatingForce.Speed - RetreatingForce.Speed
             RetreatRoll = random.randint(1,20)
             if(RetreatRoll < RetreatThreshold):
                 RetreatingForce.Casualties += (random.randint(1,5) + random.randint(1,5))

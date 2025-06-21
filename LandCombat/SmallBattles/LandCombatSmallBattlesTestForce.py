@@ -59,27 +59,27 @@ class Force:
         TotalTroops = MaA + Levies
         if(Levies == 0):
             if(TotalTroops <= 20):
-                return 16
-            elif(TotalTroops <= 100):
-                return 14
-            elif(TotalTroops <= 1000):
-                return 12
-            elif(TotalTroops <= 15000):
-                return 10
-            elif(TotalTroops <= 30000):
                 return 8
-            else:
+            elif(TotalTroops <= 100):
+                return 7
+            elif(TotalTroops <= 1000):
                 return 6
+            elif(TotalTroops <= 15000):
+                return 5
+            elif(TotalTroops <= 30000):
+                return 4
+            else:
+                return 3
         else:
             if(TotalTroops <= 20):
-                return 14
+                return 7
             elif(TotalTroops <= 100):
-                return 12
-            elif(TotalTroops <= 1000):
-                return 10
-            elif(TotalTroops <= 15000):
-                return 8
-            elif(TotalTroops <= 30000):
                 return 6
-            else:
+            elif(TotalTroops <= 1000):
+                return 5
+            elif(TotalTroops <= 15000):
                 return 4
+            elif(TotalTroops <= 30000):
+                return 3
+            else:
+                return 2

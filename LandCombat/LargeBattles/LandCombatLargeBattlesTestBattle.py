@@ -147,3 +147,29 @@ class Battle:
             Loser2.Casualties += (random.randint(1,3) + 1)
         if(Loser3 is not None):
             Loser3.Casualties += (random.randint(1,3) + 1)
+
+    def attempt_retreat(self,RetreatingFlank:Flank,NonRetreatingFlank:Flank):
+        """
+        Function to trigger a retreat or a rout for a defeated flank.
+
+        Arguments:
+            RetreatingFlank (Flank): The flank that is attempting to retreat.
+            NonRetreatingFlank (Flank): The flank that is attempting to retreat.
+        """
+        if(RetreatingFlank.Morale > 0):
+            RetreatThreshold = 10 + NonRetreatingFlank.Speed - RetreatingFlank.Speed
+            RetreatRoll = random.randint(1,20)
+            if(RetreatRoll < RetreatThreshold):
+                RetreatingFlank.Casualties += (random.randint(1,5) + random.randint(1,5))
+        else:
+            RetreatingFlank.Casualties += (random.randint(1,10) + random.randint(1,10) + random.randint(1,10) + 5)
+    
+    def reduce_casualties(self,ReducedCasualtiesFlank:Flank):
+        """
+        Function to reduce a flank's casualties taken based on its Strength Bonus.
+
+        Arguments:
+            ReducedCasualtiesFlank (Flank): The flank that is having its casualties reduced.
+        """
+        CasualtyReductionAmount = (ReducedCasualtiesFlank.Strength_Bonus * 5) if ((ReducedCasualtiesFlank.Strength_Bonus * 5) < 50) else 50
+        ReducedCasualtiesFlank.Casualties = round(ReducedCasualtiesFlank.Casualties * (1 - (CasualtyReductionAmount/100)))
