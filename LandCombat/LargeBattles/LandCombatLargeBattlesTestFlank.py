@@ -16,7 +16,7 @@ class Flank:
         Strength_Bonus (int): The bonus to combat rolls received from the flank having greater strength than the enemy's flank.
         Terrain_Bonus (int): The bonus to combat rolls received from the terrain the flank is fighting in.
         Skill_Bonus (int): The bonus to combat rolls received from the flank's commander.
-        Target (str): The enemy flank the flank is targetting.
+        Target (Flank|None): The enemy flank the flank is targetting.
         Defeated (bool): Whether or not the flank has been defeated.
     """
 
