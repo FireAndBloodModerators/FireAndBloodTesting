@@ -105,7 +105,7 @@ class Battle:
 
     def reset_forces(self):
         """
-        Function to reduce a force's morale by the damage dealt in a combat round.
+        Function to reset a force's attributes to their original state.
         """
         self.Force1.Morale = 100
         self.Force1.Casualties = 0
@@ -114,7 +114,7 @@ class Battle:
 
     def battle(self) -> int:
         """
-        Function to roll a battle between two forces.
+        Function to roll a Small Battle between two forces.
 
         Returns:
             Result (int): Result of the battle, 1 for Force 1 winning, 2 for Force 2 winning, or 0 for errors.
