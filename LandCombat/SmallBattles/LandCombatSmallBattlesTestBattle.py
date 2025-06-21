@@ -133,18 +133,24 @@ class Battle:
                 self.round_casualties(self.Force2,self.Force1)
             else:
                 pass
-        if(self.Force1.Strength_Bonus > self.Force2.Strength_Bonus):
-            self.reduce_casualties(self.Force1)
-        elif(self.Force2.Strength_Bonus > self.Force1.Strength_Bonus):
-            self.reduce_casualties(self.Force2)
-        else:
-            pass
         if((self.Force1.Morale > self.Force1.Retreat_Threshold) & (self.Force2.Morale <= self.Force2.Retreat_Threshold)):
             self.attempt_retreat(self.Force2,self.Force1)
+            if(self.Force1.Strength_Bonus > self.Force2.Strength_Bonus):
+                self.reduce_casualties(self.Force1)
+            elif(self.Force2.Strength_Bonus > self.Force1.Strength_Bonus):
+                self.reduce_casualties(self.Force2)
+            else:
+                pass
             Result = 1
             return Result
         elif((self.Force2.Morale > self.Force2.Retreat_Threshold) & (self.Force1.Morale <= self.Force1.Retreat_Threshold)):
             self.attempt_retreat(self.Force1,self.Force2)
+            if(self.Force1.Strength_Bonus > self.Force2.Strength_Bonus):
+                self.reduce_casualties(self.Force1)
+            elif(self.Force2.Strength_Bonus > self.Force1.Strength_Bonus):
+                self.reduce_casualties(self.Force2)
+            else:
+                pass
             Result = 2
             return Result
         else:
