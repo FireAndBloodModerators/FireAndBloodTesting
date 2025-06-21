@@ -128,3 +128,22 @@ class Battle:
             DamagedFlank2.Morale -= Damage
         if(DamagedFlank3 is not None):
             DamagedFlank3.Morale -= Damage
+
+    def round_casualties(self,Winner1:Flank,Loser1:Flank,Winner2:Flank|None=None,Winner3:Flank|None=None,Loser2:Flank|None=None,Loser3:Flank|None=None):
+        """
+        Function to increase a flank's battle casualties based.
+    
+        Arguments:
+            Winner1 (Flank): The flank that won the battle round.
+            Loser1 (Flank): The flank that lost the battle round.
+        """
+        Winner1.Casualties += 1
+        if(Winner2 is not None):
+            Winner2.Casualties += 1
+        if(Winner3 is not None):
+            Winner3.Casualties += 1
+        Loser1.Casualties += (random.randint(1,3) + 1)
+        if(Loser2 is not None):
+            Loser2.Casualties += (random.randint(1,3) + 1)
+        if(Loser3 is not None):
+            Loser3.Casualties += (random.randint(1,3) + 1)
