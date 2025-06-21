@@ -16,7 +16,7 @@ class Battle:
 
     def __init__(self,Force1:Force,Force2:Force):
         """
-        Initialiser function for Land Combat Battles.
+        Initialiser function for Land Combat Large Battles.
     
         Arguments:
             Force1 (Force): The first Force.
@@ -173,3 +173,53 @@ class Battle:
         """
         CasualtyReductionAmount = (ReducedCasualtiesFlank.Strength_Bonus * 5) if ((ReducedCasualtiesFlank.Strength_Bonus * 5) < 50) else 50
         ReducedCasualtiesFlank.Casualties = round(ReducedCasualtiesFlank.Casualties * (1 - (CasualtyReductionAmount/100)))
+
+    def assign_starting_targets(self):
+        """
+        Function to assign the starting targets of each force's flanks.
+        """
+        self.Force1.LeftFlank.Target = self.Force2.RightFlank
+        self.Force1.CentreFlank.Target = self.Force2.CentreFlank
+        self.Force1.RightFlank.Target = self.Force2.LeftFlank
+        self.Force2.LeftFlank.Target = self.Force2.RightFlank
+        self.Force2.CentreFlank.Target = self.Force2.CentreFlank
+        self.Force2.RightFlank.Target = self.Force2.LeftFlank
+    
+    def reset_forces(self):
+        """
+        Function to reset a force's attributes to their original state.
+        """
+        self.Force1.LeftFlank.Morale = 100
+        self.Force1.LeftFlank.Casualties = 0
+        self.Force1.LeftFlank.Target = None
+        self.Force1.LeftFlank.Defeated = False
+        self.Force1.CentreFlank.Morale = 100
+        self.Force1.CentreFlank.Casualties = 0
+        self.Force1.CentreFlank.Target = None
+        self.Force1.CentreFlank.Defeated = False
+        self.Force1.RightFlank.Morale = 100
+        self.Force1.RightFlank.Casualties = 0
+        self.Force1.RightFlank.Target = None
+        self.Force1.RightFlank.Defeated = False
+        self.Force2.LeftFlank.Morale = 100
+        self.Force2.LeftFlank.Casualties = 0
+        self.Force2.LeftFlank.Target = None
+        self.Force2.LeftFlank.Defeated = False
+        self.Force2.CentreFlank.Morale = 100
+        self.Force2.CentreFlank.Casualties = 0
+        self.Force2.CentreFlank.Target = None
+        self.Force2.CentreFlank.Defeated = False
+        self.Force2.RightFlank.Morale = 100
+        self.Force2.RightFlank.Casualties = 0
+        self.Force2.RightFlank.Target = None
+        self.Force2.RightFlank.Defeated = False
+
+    def battle(self) -> int:
+        """
+        Function to roll a Large Battle between two forces.
+
+        Returns:
+            Result (int): Result of the battle, 1 for Force 1 winning, 2 for Force 2 winning, or 0 for errors.
+        """
+        self.reset_forces()
+        self.assign_starting_targets()
