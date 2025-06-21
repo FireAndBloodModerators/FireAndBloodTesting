@@ -32,10 +32,10 @@ class Battle:
         Arguments:
             Force1Flank1 (Flank): The first force's primary flank.
             Force2Flank1 (Flank): The second force's primary flank.
-            Force1Flank2 (Flank): The first force's secondary flank.
-            Force1Flank3 (Flank): The first force's tertiary flank.
-            Force2Flank2 (Flank): The second force's secondary flank.
-            Force2Flank3 (Flank): The second force's tertiary flank.
+            Force1Flank2 (Flank): The first force's secondary flank. Default to None.
+            Force1Flank3 (Flank): The first force's tertiary flank. Default to None.
+            Force2Flank2 (Flank): The second force's secondary flank. Default to None.
+            Force2Flank3 (Flank): The second force's tertiary flank. Default to None.
         """
         if(Force1Flank2 is not None):
             if(Force1Flank3 is not None):
@@ -99,3 +99,32 @@ class Battle:
                         Force2Flank1.Strength_Bonus = math.ceil(Strength_Percentage/20)
                 else:
                     pass
+    
+    def land_combat_roll(self,RollingFlank:Flank) -> int:
+        """
+        Function to roll 2d50 and add a flank's bonuses.
+    
+        Arguments:
+            RollingFlank (Flank): The flank that is rolling.
+
+        Returns:
+            Combat_Roll (int): The 2d50 roll plus a force's bonuses.
+        """
+        Combat_Roll = random.randint(1,50) + random.randint(1,50) + RollingFlank.Strength_Bonus + RollingFlank.Terrain_Bonus + RollingFlank.Skill_Bonus
+        return Combat_Roll
+    
+    def round_morale_damage(self,DamagedFlank1:Flank,Damage:int,DamagedFlank2:Flank|None=None,DamagedFlank3:Flank|None=None):
+        """
+        Function to reduce a flank's morale by the damage dealt in a combat round.
+    
+        Arguments:
+            DamagedFlank1 (Flank): The flank that is taking damage.
+            Damage (int): The damage dealt in the combat round to the flank.
+            DamagedFlank2 (Flank): Secondary flank that is taking damage. Default to None.
+            DamagedFlank3 (Flank): Tertiary flank that is taking damage. Default to None.
+        """
+        DamagedFlank1.Morale -= Damage
+        if(DamagedFlank2 is not None):
+            DamagedFlank2.Morale -= Damage
+        if(DamagedFlank3 is not None):
+            DamagedFlank3.Morale -= Damage
