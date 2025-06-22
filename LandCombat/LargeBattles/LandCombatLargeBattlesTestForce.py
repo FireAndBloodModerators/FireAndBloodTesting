@@ -35,12 +35,12 @@ class Force:
             RightMaA (int): The number of Men-at-Arms (MaA) predetermined to be in the right flank. Default None.
             RightLevies (int): The number of Levies predetermined to be in the right flank. Default None.
         """
-        self.MaA = MaA
-        self.Levies = Levies
+        self.MaA:int = MaA
+        self.Levies:int = Levies
         self.assign_flank_troops(LeftMaA,LeftLevies,CentreMaA,CentreLevies,RightMaA,RightLevies)
-        self.LeftFlank = Flank(self.LeftMaA,self.LeftLevies)
-        self.CentreFlank = Flank(self.CentreMaA,self.CentreLevies)
-        self.RightFlank = Flank(self.RightMaA,self.CentreLevies)
+        self.LeftFlank:Flank = Flank(self.LeftMaA,self.LeftLevies)
+        self.CentreFlank:Flank = Flank(self.CentreMaA,self.CentreLevies)
+        self.RightFlank:Flank = Flank(self.RightMaA,self.CentreLevies)
     
     def assign_flank_troops(self,LeftMaA: int|None,LeftLevies: int|None,CentreMaA: int|None,CentreLevies: int|None,RightMaA: int|None,RightLevies: int|None):
         """
@@ -55,26 +55,26 @@ class Force:
             RightLevies (int): The number of Levies predetermined to be in the right flank. Default None.
         """
         if(LeftMaA is not None):
-            self.LeftMaA = LeftMaA
+            self.LeftMaA:int = LeftMaA
         else:
-            self.LeftMaA = math.floor(self.MaA/3)
+            self.LeftMaA:int = math.floor(self.MaA/3)
         if(LeftLevies is not None):
-            self.LeftLevies = LeftLevies
+            self.LeftLevies:int = LeftLevies
         else:
-            self.LeftLevies = math.floor(self.Levies/3)
+            self.LeftLevies:int = math.floor(self.Levies/3)
         if(CentreMaA is not None):
-            self.CentreMaA = CentreMaA
+            self.CentreMaA:int = CentreMaA
         else:
-            self.CentreMaA = math.floor(self.MaA/3) + (self.MaA % 3)
+            self.CentreMaA:int = math.floor(self.MaA/3) + (self.MaA % 3)
         if(CentreLevies is not None):
-            self.CentreLevies = CentreLevies
+            self.CentreLevies:int = CentreLevies
         else:
-            self.CentreLevies = math.floor(self.Levies/3) + (self.Levies % 3)
+            self.CentreLevies:int = math.floor(self.Levies/3) + (self.Levies % 3)
         if(RightMaA is not None):
-            self.RightMaA = RightMaA
+            self.RightMaA:int = RightMaA
         else:
-            self.RightMaA = math.floor(self.MaA/3)
+            self.RightMaA:int = math.floor(self.MaA/3)
         if(RightLevies is not None):
-            self.RightLevies = RightLevies
+            self.RightLevies:int = RightLevies
         else:
-            self.RightLevies = math.floor(self.Levies/3)    
+            self.RightLevies:int = math.floor(self.Levies/3)    
