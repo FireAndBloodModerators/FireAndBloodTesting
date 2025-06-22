@@ -22,8 +22,8 @@ class Battle:
             Force1 (Force): The first Force.
             Force2 (Force): The second Force.
         """
-        self.Force1 = Force1
-        self.Force2 = Force2
+        self.Force1:Force = Force1
+        self.Force2:Force = Force2
 
     def calculate_strength_bonus(self,Force1Flank1:Flank,Force2Flank1:Flank,Force1Flank2:Flank|None=None,Force1Flank3:Flank|None=None,Force2Flank2:Flank|None=None,Force2Flank3:Flank|None=None):
         """
