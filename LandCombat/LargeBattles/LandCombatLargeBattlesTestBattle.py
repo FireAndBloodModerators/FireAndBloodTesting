@@ -191,7 +191,7 @@ class Battle:
         """
         if(self.Force1.LeftFlank.Target.Defeated):
             if(not self.Force2.CentreFlank.Defeated):
-                self.Force1.LeftFlank.Target = self.Force2.CentreFlank.Defeated
+                self.Force1.LeftFlank.Target = self.Force2.CentreFlank
 
     def check_if_flanks_defeated(self):
         """

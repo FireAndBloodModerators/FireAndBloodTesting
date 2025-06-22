@@ -28,18 +28,18 @@ class Flank:
             MaA (int): The number of Men-at-Arms (MaA) in the flank.
             Levies (int): The number of Levies in the flank.
         """
-        self.MaA = MaA
-        self.Levies = Levies
-        self.Combat_Value = self.calculate_combat_value(self.MaA,self.Levies)
-        self.Morale = 100
-        self.Retreat_Threshold = 0
-        self.Speed = self.calculate_speed(self.MaA,self.Levies)
-        self.Casualties = 0
-        self.Strength_Bonus = 0
-        self.Terrain_Bonus = 0
-        self.Skill_Bonus = 0
+        self.MaA:int = MaA
+        self.Levies:int = Levies
+        self.Combat_Value:int = self.calculate_combat_value(self.MaA,self.Levies)
+        self.Morale:int = 100
+        self.Retreat_Threshold:int = 0
+        self.Speed:int = self.calculate_speed(self.MaA,self.Levies)
+        self.Casualties:int = 0
+        self.Strength_Bonus:int = 0
+        self.Terrain_Bonus:int = 0
+        self.Skill_Bonus:int = 0
         self.Target:Flank|None = None
-        self.Defeated = False
+        self.Defeated:bool = False
 
     def calculate_combat_value(self,MaA:int,Levies:int) -> int:
         """
