@@ -27,16 +27,16 @@ class Force:
             Levies (int): The number of Levies in the force.
             RetreatThreshold (int): The Morale at which the force will retreat.
         """
-        self.MaA = MaA
-        self.Levies = Levies
-        self.Combat_Value = self.calculate_combat_value(self.MaA,self.Levies)
-        self.Morale = 100
-        self.Retreat_Threshold = RetreatThreshold
-        self.Speed = self.calculate_speed(self.MaA,self.Levies)
-        self.Casualties = 0
-        self.Strength_Bonus = 0
-        self.Terrain_Bonus = 0
-        self.Skill_Bonus = 0
+        self.MaA:int = MaA
+        self.Levies:int = Levies
+        self.Combat_Value:int = self.calculate_combat_value(self.MaA,self.Levies)
+        self.Morale:int = 100
+        self.Retreat_Threshold:int = RetreatThreshold
+        self.Speed:int = self.calculate_speed(self.MaA,self.Levies)
+        self.Casualties:int = 0
+        self.Strength_Bonus:int = 0
+        self.Terrain_Bonus:int = 0
+        self.Skill_Bonus:int = 0
 
     def calculate_combat_value(self,MaA:int,Levies:int) -> int:
         """
