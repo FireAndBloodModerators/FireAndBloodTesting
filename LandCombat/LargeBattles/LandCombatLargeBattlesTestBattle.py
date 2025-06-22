@@ -190,8 +190,95 @@ class Battle:
         Function to determine new targets of each force's flanks.
         """
         if(self.Force1.LeftFlank.Target.Defeated):
-            if(not self.Force2.CentreFlank.Defeated):
+            if((self.Force2.CentreFlank.Target is self.Force1.LeftFlank) | (self.Force2.LeftFlank.Target is self.Force1.LeftFlank)):
+                if(self.Force2.CentreFlank.Target is self.Force1.LeftFlank):
+                    self.Force1.LeftFlank.Target = self.Force2.CentreFlank
+                elif(self.Force2.LeftFlank.Target is self.Force1.LeftFlank):
+                    self.Force1.LeftFlank.Target = self.Force2.LeftFlank
+            elif(not self.Force2.CentreFlank.Defeated):
                 self.Force1.LeftFlank.Target = self.Force2.CentreFlank
+                if(self.Force2.CentreFlank.Target.Target is not self.Force2.CentreFlank):
+                    self.Force2.CentreFlank.Target = self.Force1.LeftFlank
+            elif(not self.Force2.LeftFlank.Defeated):
+                self.Force1.LeftFlank.Target = self.Force2.LeftFlank
+                if(self.Force2.LeftFlank.Target.Target is not self.Force2.LeftFlank):
+                    self.Force2.LeftFlank.Target = self.Force1.LeftFlank
+            else:
+                print("Error in new target")
+        if(self.Force1.RightFlank.Target.Defeated):
+            if((self.Force2.CentreFlank.Target is self.Force1.RightFlank) | (self.Force2.RightFlank.Target is self.Force1.RightFlank)):
+                if(self.Force2.CentreFlank.Target is self.Force1.RightFlank):
+                    self.Force1.RightFlank.Target = self.Force2.CentreFlank
+                elif(self.Force2.RightFlank.Target is self.Force1.RightFlank):
+                    self.Force1.RightFlank.Target = self.Force2.RightFlank
+            elif(not self.Force2.CentreFlank.Defeated):
+                self.Force1.RightFlank.Target = self.Force2.CentreFlank
+                if(self.Force2.CentreFlank.Target.Target is not self.Force2.CentreFlank):
+                    self.Force2.CentreFlank.Target = self.Force1.RightFlank
+            elif(not self.Force2.RightFlank.Defeated):
+                self.Force1.RightFlank.Target = self.Force2.RightFlank
+                if(self.Force2.RightFlank.Target.Target is not self.Force2.RightFlank):
+                    self.Force2.RightFlank.Target = self.Force1.RightFlank
+            else:
+                print("Error in new target")
+        if(self.Force1.CentreFlank.Target.Defeated):
+            if((self.Force2.LeftFlank.Target is self.Force1.CentreFlank) | (self.Force2.RightFlank.Target is self.Force1.CentreFlank)):
+                if(self.Force2.LeftFlank.Target is self.Force1.CentreFlank):
+                    self.Force1.CentreFlank.Target = self.Force2.LeftFlank
+                elif(self.Force2.RightFlank.Target is self.Force1.CentreFlank):
+                    self.Force1.CentreFlank.Target = self.Force2.RightFlank
+            else:
+                if(((self.Force1.LeftFlank.Morale < self.Force1.RightFlank.Morale) & (not self.Force1.LeftFlank.Defeated) & (not self.Force1.RightFlank.Defeated)) | ((not self.Force1.LeftFlank.Defeated) & self.Force1.RightFlank.Defeated)):
+                    self.Force1.CentreFlank.Target = self.Force1.LeftFlank.Target
+                elif(((self.Force1.RightFlank.Morale < self.Force1.LeftFlank.Morale) & (not self.Force1.RightFlank.Defeated) & (not self.Force1.LeftFlank.Defeated)) | ((not self.Force1.RightFlank.Defeated) & self.Force1.LeftFlank.Defeated)):
+                    self.Force1.CentreFlank.Target = self.Force1.RightFlank.Target
+                else:
+                    print("Error in new target")
+        if(self.Force2.LeftFlank.Target.Defeated):
+            if((self.Force1.CentreFlank.Target is self.Force2.LeftFlank) | (self.Force1.LeftFlank.Target is self.Force2.LeftFlank)):
+                if(self.Force1.CentreFlank.Target is self.Force2.LeftFlank):
+                    self.Force2.LeftFlank.Target = self.Force1.CentreFlank
+                elif(self.Force1.LeftFlank.Target is self.Force2.LeftFlank):
+                    self.Force2.LeftFlank.Target = self.Force1.LeftFlank
+            elif(not self.Force1.CentreFlank.Defeated):
+                self.Force2.LeftFlank.Target = self.Force1.CentreFlank
+                if(self.Force1.CentreFlank.Target.Target is not self.Force1.CentreFlank):
+                    self.Force1.CentreFlank.Target = self.Force2.LeftFlank
+            elif(not self.Force1.LeftFlank.Defeated):
+                self.Force2.LeftFlank.Target = self.Force1.LeftFlank
+                if(self.Force1.LeftFlank.Target.Target is not self.Force1.LeftFlank):
+                    self.Force1.LeftFlank.Target = self.Force2.LeftFlank
+            else:
+                print("Error in new target")
+        if(self.Force2.RightFlank.Target.Defeated):
+            if((self.Force1.CentreFlank.Target is self.Force2.RightFlank) | (self.Force1.RightFlank.Target is self.Force2.RightFlank)):
+                if(self.Force1.CentreFlank.Target is self.Force2.RightFlank):
+                    self.Force2.RightFlank.Target = self.Force1.CentreFlank
+                elif(self.Force1.RightFlank.Target is self.Force2.RightFlank):
+                    self.Force2.RightFlank.Target = self.Force1.RightFlank
+            elif(not self.Force1.CentreFlank.Defeated):
+                self.Force2.RightFlank.Target = self.Force1.CentreFlank
+                if(self.Force1.CentreFlank.Target.Target is not self.Force1.CentreFlank):
+                    self.Force1.CentreFlank.Target = self.Force2.RightFlank
+            elif(not self.Force1.RightFlank.Defeated):
+                self.Force2.RightFlank.Target = self.Force1.RightFlank
+                if(self.Force1.RightFlank.Target.Target is not self.Force1.RightFlank):
+                    self.Force1.RightFlank.Target = self.Force2.RightFlank
+            else:
+                print("Error in new target")
+        if(self.Force2.CentreFlank.Target.Defeated):
+            if((self.Force1.LeftFlank.Target is self.Force2.CentreFlank) | (self.Force1.RightFlank.Target is self.Force2.CentreFlank)):
+                if(self.Force1.LeftFlank.Target is self.Force2.CentreFlank):
+                    self.Force2.CentreFlank.Target = self.Force1.LeftFlank
+                elif(self.Force1.RightFlank.Target is self.Force2.CentreFlank):
+                    self.Force2.CentreFlank.Target = self.Force1.RightFlank
+            else:
+                if(((self.Force2.LeftFlank.Morale < self.Force2.RightFlank.Morale) & (not self.Force2.LeftFlank.Defeated) & (not self.Force2.RightFlank.Defeated)) | ((not self.Force2.LeftFlank.Defeated) & self.Force2.RightFlank.Defeated)):
+                    self.Force2.CentreFlank.Target = self.Force2.LeftFlank.Target
+                elif(((self.Force2.RightFlank.Morale < self.Force2.LeftFlank.Morale) & (not self.Force2.RightFlank.Defeated) & (not self.Force2.LeftFlank.Defeated)) | ((not self.Force2.RightFlank.Defeated) & self.Force2.LeftFlank.Defeated)):
+                    self.Force2.CentreFlank.Target = self.Force2.RightFlank.Target
+                else:
+                    print("Error in new target")
 
     def check_if_flanks_defeated(self):
         """
@@ -210,6 +297,11 @@ class Battle:
         if((not self.Force2.RightFlank.Defeated) & (self.Force2.RightFlank.Morale <= self.Force2.RightFlank.Retreat_Threshold)):
             self.Force2.RightFlank.Defeated = True
         self.assign_new_targets()
+    
+    def flank_damage(self):
+        """
+        Function to have each flank deal damage to its target.
+        """
     
     def reset_forces(self):
         """
@@ -255,3 +347,4 @@ class Battle:
             ((self.Force2.LeftFlank.Morale > self.Force2.LeftFlank.Retreat_Threshold) | (self.Force2.CentreFlank.Morale > self.Force2.CentreFlank.Retreat_Threshold) | (self.Force2.RightFlank.Morale > self.Force2.RightFlank.Retreat_Threshold))
         ):
             self.check_if_flanks_defeated()
+            self.flank_damage()
