@@ -38,7 +38,7 @@ class Flank:
         self.Strength_Bonus = 0
         self.Terrain_Bonus = 0
         self.Skill_Bonus = 0
-        self.Target = None
+        self.Target:Flank|None = None
         self.Defeated = False
 
     def calculate_combat_value(self,MaA:int,Levies:int) -> int:

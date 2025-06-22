@@ -184,6 +184,32 @@ class Battle:
         self.Force2.LeftFlank.Target = self.Force2.RightFlank
         self.Force2.CentreFlank.Target = self.Force2.CentreFlank
         self.Force2.RightFlank.Target = self.Force2.LeftFlank
+
+    def assign_new_targets(self):
+        """
+        Function to determine new targets of each force's flanks.
+        """
+        if(self.Force1.LeftFlank.Target.Defeated):
+            if(not self.Force2.CentreFlank.Defeated):
+                self.Force1.LeftFlank.Target = self.Force2.CentreFlank.Defeated
+
+    def check_if_flanks_defeated(self):
+        """
+        Function to determine if a force's flanks are defeated.
+        """
+        if((not self.Force1.LeftFlank.Defeated) & (self.Force1.LeftFlank.Morale <= self.Force1.LeftFlank.Retreat_Threshold)):
+            self.Force1.LeftFlank.Defeated = True
+        if((not self.Force1.CentreFlank.Defeated) & (self.Force1.CentreFlank.Morale <= self.Force1.CentreFlank.Retreat_Threshold)):
+            self.Force1.CentreFlank.Defeated = True
+        if((not self.Force1.RightFlank.Defeated) & (self.Force1.RightFlank.Morale <= self.Force1.RightFlank.Retreat_Threshold)):
+            self.Force1.RightFlank.Defeated = True
+        if((not self.Force2.LeftFlank.Defeated) & (self.Force2.LeftFlank.Morale <= self.Force2.LeftFlank.Retreat_Threshold)):
+            self.Force2.LeftFlank.Defeated = True
+        if((not self.Force2.CentreFlank.Defeated) & (self.Force2.CentreFlank.Morale <= self.Force2.CentreFlank.Retreat_Threshold)):
+            self.Force2.CentreFlank.Defeated = True
+        if((not self.Force2.RightFlank.Defeated) & (self.Force2.RightFlank.Morale <= self.Force2.RightFlank.Retreat_Threshold)):
+            self.Force2.RightFlank.Defeated = True
+        self.assign_new_targets()
     
     def reset_forces(self):
         """
@@ -223,3 +249,9 @@ class Battle:
         """
         self.reset_forces()
         self.assign_starting_targets()
+        while(
+            ((self.Force1.LeftFlank.Morale > self.Force1.LeftFlank.Retreat_Threshold) | (self.Force1.CentreFlank.Morale > self.Force1.CentreFlank.Retreat_Threshold) | (self.Force1.RightFlank.Morale > self.Force1.RightFlank.Retreat_Threshold))
+            &
+            ((self.Force2.LeftFlank.Morale > self.Force2.LeftFlank.Retreat_Threshold) | (self.Force2.CentreFlank.Morale > self.Force2.CentreFlank.Retreat_Threshold) | (self.Force2.RightFlank.Morale > self.Force2.RightFlank.Retreat_Threshold))
+        ):
+            self.check_if_flanks_defeated()
