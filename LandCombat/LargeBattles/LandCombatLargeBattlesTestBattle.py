@@ -181,9 +181,9 @@ class Battle:
         self.Force1.LeftFlank.Target = self.Force2.RightFlank
         self.Force1.CentreFlank.Target = self.Force2.CentreFlank
         self.Force1.RightFlank.Target = self.Force2.LeftFlank
-        self.Force2.LeftFlank.Target = self.Force2.RightFlank
-        self.Force2.CentreFlank.Target = self.Force2.CentreFlank
-        self.Force2.RightFlank.Target = self.Force2.LeftFlank
+        self.Force2.LeftFlank.Target = self.Force1.RightFlank
+        self.Force2.CentreFlank.Target = self.Force1.CentreFlank
+        self.Force2.RightFlank.Target = self.Force1.LeftFlank
 
     def assign_new_targets(self):
         """
@@ -302,6 +302,25 @@ class Battle:
         """
         Function to have each flank deal damage to its target.
         """
+        if(not self.Force1.LeftFlank.Defeated):
+            if(self.Force1.LeftFlank.Target.Target is self.Force1.LeftFlank):
+                if((self.Force1.CentreFlank.Target is self.Force1.LeftFlank.Target) & (self.Force1.RightFlank.Target is self.Force1.LeftFlank.Target)):
+                    if((self.Force1.LeftFlank.Combat_Value + self.Force1.CentreFlank.Combat_Value + self.Force1.RightFlank.Combat_Value) > self.Force1.LeftFlank.Target.Combat_Value):
+                        self.calculate_strength_bonus(Force1Flank1=self.Force1.LeftFlank,Force2Flank1=self.Force1.LeftFlank.Target,Force1Flank2=self.Force1.CentreFlank,Force1Flank3=self.Force1.RightFlank)
+                        Flank1Roll = self.land_combat_roll(self.Force1.LeftFlank)
+                        Flank2Roll = self.land_combat_roll(self.Force1.LeftFlank.Target)
+                        if(Flank1Roll > Flank2Roll):
+                            Damage = Flank1Roll - Flank2Roll
+                            self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank.Target,Damage=Damage)
+                            self.round_casualties(Winner1=self.Force1.LeftFlank,Loser1=self.Force1.LeftFlank.Target,Winner2=self.Force1.CentreFlank,Winner3=self.Force1.RightFlank)
+                        if(Flank2Roll > Flank1Roll):
+                            Damage = Flank2Roll - Flank1Roll
+                            self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank,Damage=Damage,DamagedFlank2=self.Force1.CentreFlank,DamagedFlank3=self.Force1.RightFlank)
+                            self.round_casualties(Winner1=self.Force1.LeftFlank.Target,Loser1=self.Force1.LeftFlank,Loser2=self.Force1.CentreFlank,Loser3=self.Force1.RightFlank)
+                        else:
+                            pass
+                    else:
+                        print()
     
     def reset_forces(self):
         """
