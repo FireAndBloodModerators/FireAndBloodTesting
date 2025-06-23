@@ -13,7 +13,7 @@ ColumnLabels = [f"{math.floor(LevyNumber/3)} CV Left // {math.floor(LevyNumber/3
 ColumnLabels.insert(0,"")
 
 ## Set number of simulations
-SimulationCount = 100000
+SimulationCount = 1
 
 ## Initialise results list
 WinPercentageResults = []
@@ -84,5 +84,13 @@ for LevyNumber1 in LevyNumbers:
     WinPercentageResults.append(NewWinPercentageResults)
     CasualtyResults.append(NewCasualtyPercentageResults)
 
-    #### Checkpoint
+    ### Checkpoint
     print(f"{math.floor(LevyNumber1/3)} CV Left // {math.floor(LevyNumber1/3) + (LevyNumber1 % 3)} CV Centre // {math.floor(LevyNumber1/3)} CV Right simulations complete")
+
+## Save results to dataframe
+WinPercentageDataFrame = pd.DataFrame(WinPercentageResults,columns=ColumnLabels)
+CasualtyDataFrame = pd.DataFrame(CasualtyResults,columns=ColumnLabels)
+
+### Save dataframes to csv file
+WinPercentageDataFrame.to_csv("LandCombat/LargeBattles/land_combat_large_battle_win_percentages.csv",index=False)
+CasualtyDataFrame.to_csv("LandCombat/LargeBattles/land_combat_small_large_casualties.csv",index=False)
