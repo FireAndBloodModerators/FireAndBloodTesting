@@ -651,6 +651,18 @@ class Battle:
                     else:
                         pass
      
+    def flank_retreats(self):
+        """
+        Function to determine if flanks retreat or are routed.
+        """
+        if(self.Force1.LeftFlank.Defeated):
+            print()
+
+    def battle_winner(self) -> int:
+        """
+        Function to determine which force won the battle. 1 is Force 1, 2 is Force 2, 0 is error.
+        """
+    
     def reset_strength_bonuses(self):
         """
         Function to reset all flanks' Strength Bonus to 0.
@@ -710,3 +722,6 @@ class Battle:
             self.check_if_flanks_defeated()
             self.flank_damage()
         self.reset_strength_bonuses()
+        self.flank_retreats()
+        Victor = self.battle_winner()
+        return Victor
