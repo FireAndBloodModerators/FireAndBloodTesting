@@ -189,6 +189,8 @@ class Battle:
         """
         Function to determine new targets of each force's flanks.
         """
+        Force1Flanks = sum([not self.Force1.LeftFlank.Defeated,not self.Force1.CentreFlank.Defeated,not self.Force1.RightFlank])
+        Force2Flanks = sum([not self.Force2.LeftFlank.Defeated,not self.Force2.CentreFlank.Defeated,not self.Force2.RightFlank])
         if(self.Force1.LeftFlank.Target.Defeated):
             if((self.Force2.CentreFlank.Target is self.Force1.LeftFlank) | (self.Force2.LeftFlank.Target is self.Force1.LeftFlank)):
                 if(self.Force2.CentreFlank.Target is self.Force1.LeftFlank):
@@ -203,6 +205,8 @@ class Battle:
                 self.Force1.LeftFlank.Target = self.Force2.LeftFlank
                 if(self.Force2.LeftFlank.Target.Target is not self.Force2.LeftFlank):
                     self.Force2.LeftFlank.Target = self.Force1.LeftFlank
+            elif(Force2Flanks == 0):
+                pass
             else:
                 print("Error in new target")
         if(self.Force1.RightFlank.Target.Defeated):
@@ -219,6 +223,8 @@ class Battle:
                 self.Force1.RightFlank.Target = self.Force2.RightFlank
                 if(self.Force2.RightFlank.Target.Target is not self.Force2.RightFlank):
                     self.Force2.RightFlank.Target = self.Force1.RightFlank
+            elif(Force2Flanks == 0):
+                pass
             else:
                 print("Error in new target")
         if(self.Force1.CentreFlank.Target.Defeated):
@@ -232,6 +238,8 @@ class Battle:
                     self.Force1.CentreFlank.Target = self.Force1.LeftFlank.Target
                 elif(((self.Force1.RightFlank.Morale < self.Force1.LeftFlank.Morale) & (not self.Force1.RightFlank.Defeated) & (not self.Force1.LeftFlank.Defeated)) | ((not self.Force1.RightFlank.Defeated) & self.Force1.LeftFlank.Defeated)):
                     self.Force1.CentreFlank.Target = self.Force1.RightFlank.Target
+                elif(Force2Flanks == 0):
+                    pass
                 else:
                     print("Error in new target")
         if(self.Force2.LeftFlank.Target.Defeated):
@@ -248,6 +256,8 @@ class Battle:
                 self.Force2.LeftFlank.Target = self.Force1.LeftFlank
                 if(self.Force1.LeftFlank.Target.Target is not self.Force1.LeftFlank):
                     self.Force1.LeftFlank.Target = self.Force2.LeftFlank
+            elif(Force1Flanks == 0):
+                pass
             else:
                 print("Error in new target")
         if(self.Force2.RightFlank.Target.Defeated):
@@ -264,6 +274,8 @@ class Battle:
                 self.Force2.RightFlank.Target = self.Force1.RightFlank
                 if(self.Force1.RightFlank.Target.Target is not self.Force1.RightFlank):
                     self.Force1.RightFlank.Target = self.Force2.RightFlank
+            elif(Force1Flanks == 0):
+                pass
             else:
                 print("Error in new target")
         if(self.Force2.CentreFlank.Target.Defeated):
@@ -277,6 +289,8 @@ class Battle:
                     self.Force2.CentreFlank.Target = self.Force2.LeftFlank.Target
                 elif(((self.Force2.RightFlank.Morale < self.Force2.LeftFlank.Morale) & (not self.Force2.RightFlank.Defeated) & (not self.Force2.LeftFlank.Defeated)) | ((not self.Force2.RightFlank.Defeated) & self.Force2.LeftFlank.Defeated)):
                     self.Force2.CentreFlank.Target = self.Force2.RightFlank.Target
+                elif(Force1Flanks == 0):
+                    pass
                 else:
                     print("Error in new target")
 
