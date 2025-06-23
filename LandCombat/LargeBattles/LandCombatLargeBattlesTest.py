@@ -13,7 +13,7 @@ ColumnLabels = [f"{math.floor(LevyNumber/3)} CV Left // {math.floor(LevyNumber/3
 ColumnLabels.insert(0,"")
 
 ## Set number of simulations
-SimulationCount = 1
+SimulationCount = 10
 
 ## Initialise results list
 WinPercentageResults = []

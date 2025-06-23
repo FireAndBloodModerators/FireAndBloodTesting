@@ -208,7 +208,7 @@ class Battle:
             elif(Force2Flanks == 0):
                 pass
             else:
-                print("Error in new target")
+                print("Error in new target for Force 1 Left Flank")
         if(self.Force1.RightFlank.Target.Defeated):
             if((self.Force2.CentreFlank.Target is self.Force1.RightFlank) | (self.Force2.RightFlank.Target is self.Force1.RightFlank)):
                 if(self.Force2.CentreFlank.Target is self.Force1.RightFlank):
@@ -226,7 +226,7 @@ class Battle:
             elif(Force2Flanks == 0):
                 pass
             else:
-                print("Error in new target")
+                print("Error in new target for Force 1 Right Flank")
         if(self.Force1.CentreFlank.Target.Defeated):
             if((self.Force2.LeftFlank.Target is self.Force1.CentreFlank) | (self.Force2.RightFlank.Target is self.Force1.CentreFlank)):
                 if(self.Force2.LeftFlank.Target is self.Force1.CentreFlank):
@@ -241,7 +241,7 @@ class Battle:
                 elif(Force2Flanks == 0):
                     pass
                 else:
-                    print("Error in new target")
+                    print("Error in new target for Force 1 Centre Flank")
         if(self.Force2.LeftFlank.Target.Defeated):
             if((self.Force1.CentreFlank.Target is self.Force2.LeftFlank) | (self.Force1.LeftFlank.Target is self.Force2.LeftFlank)):
                 if(self.Force1.CentreFlank.Target is self.Force2.LeftFlank):
@@ -259,7 +259,7 @@ class Battle:
             elif(Force1Flanks == 0):
                 pass
             else:
-                print("Error in new target")
+                print("Error in new target for Force 2 Left Flank")
         if(self.Force2.RightFlank.Target.Defeated):
             if((self.Force1.CentreFlank.Target is self.Force2.RightFlank) | (self.Force1.RightFlank.Target is self.Force2.RightFlank)):
                 if(self.Force1.CentreFlank.Target is self.Force2.RightFlank):
@@ -277,7 +277,7 @@ class Battle:
             elif(Force1Flanks == 0):
                 pass
             else:
-                print("Error in new target")
+                print("Error in new target for Force 2 Right Flank")
         if(self.Force2.CentreFlank.Target.Defeated):
             if((self.Force1.LeftFlank.Target is self.Force2.CentreFlank) | (self.Force1.RightFlank.Target is self.Force2.CentreFlank)):
                 if(self.Force1.LeftFlank.Target is self.Force2.CentreFlank):
@@ -292,7 +292,7 @@ class Battle:
                 elif(Force1Flanks == 0):
                     pass
                 else:
-                    print("Error in new target")
+                    print("Error in new target for Force 2 Centre Flank")
 
     def check_if_flanks_defeated(self):
         """
@@ -741,6 +741,17 @@ class Battle:
                 self.calculate_strength_bonus(self.Force2.RightFlank,self.Force1.LeftFlank)
                 self.attempt_retreat(self.Force2.RightFlank,self.Force1.LeftFlank)
 
+    def reduce_flank_casualties(self):
+        """
+        Function to reduce a flank's casualties taken based on its Strength Bonus.
+        """
+        self.reduce_casualties(self.Force1.LeftFlank)
+        self.reduce_casualties(self.Force1.CentreFlank)
+        self.reduce_casualties(self.Force1.RightFlank)
+        self.reduce_casualties(self.Force2.LeftFlank)
+        self.reduce_casualties(self.Force2.CentreFlank)
+        self.reduce_casualties(self.Force2.RightFlank)
+    
     def battle_winner(self) -> int:
         """
         Function to determine which force won the battle. 1 is Force 1, 2 is Force 2, 0 is error.
@@ -771,6 +782,14 @@ class Battle:
         self.Force2.LeftFlank.Strength_Bonus = 0
         self.Force2.CentreFlank.Strength_Bonus = 0
         self.Force2.RightFlank.Strength_Bonus = 0
+
+    def base_strength_bonuses(self):
+        """
+        Function to get Strength Bonuses of each flank, compared to opposite flank.
+        """
+        self.calculate_strength_bonus(self.Force1.LeftFlank,self.Force2.RightFlank)
+        self.calculate_strength_bonus(self.Force1.CentreFlank,self.Force2.CentreFlank)
+        self.calculate_strength_bonus(self.Force1.RightFlank,self.Force2.LeftFlank)
     
     def reset_forces(self):
         """
@@ -820,6 +839,8 @@ class Battle:
             self.check_if_flanks_defeated()
             self.flank_damage()
         self.reset_strength_bonuses()
+        self.base_strength_bonuses()
         self.flank_retreats()
+        self.reduce_flank_casualties()
         Victor = self.battle_winner()
         return Victor
