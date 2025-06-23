@@ -304,23 +304,363 @@ class Battle:
         """
         if(not self.Force1.LeftFlank.Defeated):
             if(self.Force1.LeftFlank.Target.Target is self.Force1.LeftFlank):
-                if((self.Force1.CentreFlank.Target is self.Force1.LeftFlank.Target) & (self.Force1.RightFlank.Target is self.Force1.LeftFlank.Target)):
-                    if((self.Force1.LeftFlank.Combat_Value + self.Force1.CentreFlank.Combat_Value + self.Force1.RightFlank.Combat_Value) > self.Force1.LeftFlank.Target.Combat_Value):
-                        self.calculate_strength_bonus(Force1Flank1=self.Force1.LeftFlank,Force2Flank1=self.Force1.LeftFlank.Target,Force1Flank2=self.Force1.CentreFlank,Force1Flank3=self.Force1.RightFlank)
-                        Flank1Roll = self.land_combat_roll(self.Force1.LeftFlank)
-                        Flank2Roll = self.land_combat_roll(self.Force1.LeftFlank.Target)
-                        if(Flank1Roll > Flank2Roll):
-                            Damage = Flank1Roll - Flank2Roll
-                            self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank.Target,Damage=Damage)
-                            self.round_casualties(Winner1=self.Force1.LeftFlank,Loser1=self.Force1.LeftFlank.Target,Winner2=self.Force1.CentreFlank,Winner3=self.Force1.RightFlank)
-                        if(Flank2Roll > Flank1Roll):
-                            Damage = Flank2Roll - Flank1Roll
-                            self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank,Damage=Damage,DamagedFlank2=self.Force1.CentreFlank,DamagedFlank3=self.Force1.RightFlank)
-                            self.round_casualties(Winner1=self.Force1.LeftFlank.Target,Loser1=self.Force1.LeftFlank,Loser2=self.Force1.CentreFlank,Loser3=self.Force1.RightFlank)
-                        else:
-                            pass
+                if(((self.Force1.CentreFlank.Target is self.Force1.LeftFlank.Target) & (not self.Force1.CentreFlank.Defeated)) & ((self.Force1.RightFlank.Target is self.Force1.LeftFlank.Target) & (not self.Force1.RightFlank.Defeated))):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.LeftFlank,Force2Flank1=self.Force1.LeftFlank.Target,Force1Flank2=self.Force1.CentreFlank,Force1Flank3=self.Force1.RightFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.LeftFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.LeftFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.LeftFlank,Loser1=self.Force1.LeftFlank.Target,Winner2=self.Force1.CentreFlank,Winner3=self.Force1.RightFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank,Damage=Damage,DamagedFlank2=self.Force1.CentreFlank,DamagedFlank3=self.Force1.RightFlank)
+                        self.round_casualties(Winner1=self.Force1.LeftFlank.Target,Loser1=self.Force1.LeftFlank,Loser2=self.Force1.CentreFlank,Loser3=self.Force1.RightFlank)
                     else:
-                        print()
+                        pass
+                elif((self.Force1.CentreFlank.Target is self.Force1.LeftFlank.Target) & (not self.Force1.CentreFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.LeftFlank,Force2Flank1=self.Force1.LeftFlank.Target,Force1Flank2=self.Force1.CentreFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.LeftFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.LeftFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.LeftFlank,Loser1=self.Force1.LeftFlank.Target,Winner2=self.Force1.CentreFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank,Damage=Damage,DamagedFlank2=self.Force1.CentreFlank)
+                        self.round_casualties(Winner1=self.Force1.LeftFlank.Target,Loser1=self.Force1.LeftFlank,Loser2=self.Force1.CentreFlank)
+                    else:
+                        pass
+                elif((self.Force1.RightFlank.Target is self.Force1.LeftFlank.Target) & (not self.Force1.RightFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.LeftFlank,Force2Flank1=self.Force1.LeftFlank.Target,Force1Flank2=self.Force1.RightFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.LeftFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.LeftFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.LeftFlank,Loser1=self.Force1.LeftFlank.Target,Winner2=self.Force1.RightFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank,Damage=Damage,DamagedFlank2=self.Force1.RightFlank)
+                        self.round_casualties(Winner1=self.Force1.LeftFlank.Target,Loser1=self.Force1.LeftFlank,Loser2=self.Force1.RightFlank)
+                    else:
+                        pass
+                else:
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.LeftFlank,Force2Flank1=self.Force1.LeftFlank.Target)
+                    Flank1Roll = self.land_combat_roll(self.Force1.LeftFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.LeftFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.LeftFlank,Loser1=self.Force1.LeftFlank.Target)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.LeftFlank,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.LeftFlank.Target,Loser1=self.Force1.LeftFlank)
+                    else:
+                        pass
+        if(not self.Force1.CentreFlank.Defeated):
+            if(self.Force1.CentreFlank.Target.Target is self.Force1.CentreFlank):
+                if(((self.Force1.LeftFlank.Target is self.Force1.CentreFlank.Target) & (not self.Force1.LeftFlank.Defeated)) & ((self.Force1.RightFlank.Target is self.Force1.CentreFlank.Target) & (not self.Force1.CentreFlank.Defeated))):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.CentreFlank,Force2Flank1=self.Force1.CentreFlank.Target,Force1Flank2=self.Force1.LeftFlank,Force1Flank3=self.Force1.RightFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.CentreFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.CentreFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.CentreFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.CentreFlank,Loser1=self.Force1.CentreFlank.Target,Winner2=self.Force1.LeftFlank,Winner3=self.Force1.RightFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.CentreFlank,Damage=Damage,DamagedFlank2=self.Force1.LeftFlank,DamagedFlank3=self.Force1.RightFlank)
+                        self.round_casualties(Winner1=self.Force1.CentreFlank.Target,Loser1=self.Force1.CentreFlank,Loser2=self.Force1.LeftFlank,Loser3=self.Force1.RightFlank)
+                    else:
+                        pass
+                elif((self.Force1.LeftFlank.Target is self.Force1.CentreFlank.Target) & (not self.Force1.LeftFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.CentreFlank,Force2Flank1=self.Force1.CentreFlank.Target,Force1Flank2=self.Force1.LeftFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.CentreFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.CentreFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.CentreFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.CentreFlank,Loser1=self.Force1.CentreFlank.Target,Winner2=self.Force1.LeftFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.CentreFlank,Damage=Damage,DamagedFlank2=self.Force1.LeftFlank)
+                        self.round_casualties(Winner1=self.Force1.CentreFlank.Target,Loser1=self.Force1.CentreFlank,Loser2=self.Force1.LeftFlank)
+                    else:
+                        pass
+                elif((self.Force1.RightFlank.Target is self.Force1.CentreFlank.Target) & (not self.Force1.RightFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.CentreFlank,Force2Flank1=self.Force1.CentreFlank.Target,Force1Flank2=self.Force1.RightFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.CentreFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.CentreFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.CentreFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.CentreFlank,Loser1=self.Force1.CentreFlank.Target,Winner2=self.Force1.RightFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.CentreFlank,Damage=Damage,DamagedFlank2=self.Force1.RightFlank)
+                        self.round_casualties(Winner1=self.Force1.CentreFlank.Target,Loser1=self.Force1.CentreFlank,Loser2=self.Force1.RightFlank)
+                    else:
+                        pass
+                else:
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.CentreFlank,Force2Flank1=self.Force1.CentreFlank.Target)
+                    Flank1Roll = self.land_combat_roll(self.Force1.CentreFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.CentreFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.CentreFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.CentreFlank,Loser1=self.Force1.CentreFlank.Target)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.CentreFlank,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.CentreFlank.Target,Loser1=self.Force1.CentreFlank)
+                    else:
+                        pass
+        if(not self.Force1.RightFlank.Defeated):
+            if(self.Force1.RightFlank.Target.Target is self.Force1.RightFlank):
+                if(((self.Force1.CentreFlank.Target is self.Force1.RightFlank.Target) & (not self.Force1.CentreFlank.Defeated)) & ((self.Force1.LeftFlank.Target is self.Force1.RightFlank.Target) & (not self.Force1.LeftFlank.Defeated))):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.RightFlank,Force2Flank1=self.Force1.RightFlank.Target,Force1Flank2=self.Force1.CentreFlank,Force1Flank3=self.Force1.LeftFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.RightFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.RightFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.RightFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.RightFlank,Loser1=self.Force1.RightFlank.Target,Winner2=self.Force1.CentreFlank,Winner3=self.Force1.LeftFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.RightFlank,Damage=Damage,DamagedFlank2=self.Force1.CentreFlank,DamagedFlank3=self.Force1.LeftFlank)
+                        self.round_casualties(Winner1=self.Force1.RightFlank.Target,Loser1=self.Force1.RightFlank,Loser2=self.Force1.CentreFlank,Loser3=self.Force1.LeftFlank)
+                    else:
+                        pass
+                elif((self.Force1.CentreFlank.Target is self.Force1.RightFlank.Target) & (not self.Force1.CentreFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.RightFlank,Force2Flank1=self.Force1.RightFlank.Target,Force1Flank2=self.Force1.CentreFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.RightFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.RightFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.RightFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.RightFlank,Loser1=self.Force1.RightFlank.Target,Winner2=self.Force1.CentreFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.RightFlank,Damage=Damage,DamagedFlank2=self.Force1.CentreFlank)
+                        self.round_casualties(Winner1=self.Force1.RightFlank.Target,Loser1=self.Force1.RightFlank,Loser2=self.Force1.CentreFlank)
+                    else:
+                        pass
+                elif((self.Force1.LeftFlank.Target is self.Force1.RightFlank.Target) & (not self.Force1.LeftFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.RightFlank,Force2Flank1=self.Force1.RightFlank.Target,Force1Flank2=self.Force1.LeftFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force1.RightFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.RightFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.RightFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.RightFlank,Loser1=self.Force1.RightFlank.Target,Winner2=self.Force1.LeftFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.RightFlank,Damage=Damage,DamagedFlank2=self.Force1.LeftFlank)
+                        self.round_casualties(Winner1=self.Force1.RightFlank.Target,Loser1=self.Force1.RightFlank,Loser2=self.Force1.LeftFlank)
+                    else:
+                        pass
+                else:
+                    self.calculate_strength_bonus(Force1Flank1=self.Force1.RightFlank,Force2Flank1=self.Force1.RightFlank.Target)
+                    Flank1Roll = self.land_combat_roll(self.Force1.RightFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force1.RightFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.RightFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.RightFlank,Loser1=self.Force1.RightFlank.Target)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force1.RightFlank,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force1.RightFlank.Target,Loser1=self.Force1.RightFlank)
+                    else:
+                        pass
+        if(not self.Force2.LeftFlank.Defeated):
+            if(self.Force2.LeftFlank.Target.Target is self.Force2.LeftFlank):
+                if(((self.Force2.CentreFlank.Target is self.Force2.LeftFlank.Target) & (not self.Force2.CentreFlank.Defeated)) & ((self.Force2.RightFlank.Target is self.Force2.LeftFlank.Target) & (not self.Force2.RightFlank.Defeated))):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.LeftFlank,Force2Flank1=self.Force2.LeftFlank.Target,Force1Flank2=self.Force2.CentreFlank,Force1Flank3=self.Force2.RightFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.LeftFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.LeftFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.LeftFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.LeftFlank,Loser1=self.Force2.LeftFlank.Target,Winner2=self.Force2.CentreFlank,Winner3=self.Force2.RightFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.LeftFlank,Damage=Damage,DamagedFlank2=self.Force2.CentreFlank,DamagedFlank3=self.Force2.RightFlank)
+                        self.round_casualties(Winner1=self.Force2.LeftFlank.Target,Loser1=self.Force2.LeftFlank,Loser2=self.Force2.CentreFlank,Loser3=self.Force2.RightFlank)
+                    else:
+                        pass
+                elif((self.Force2.CentreFlank.Target is self.Force2.LeftFlank.Target) & (not self.Force2.CentreFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.LeftFlank,Force2Flank1=self.Force2.LeftFlank.Target,Force1Flank2=self.Force2.CentreFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.LeftFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.LeftFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.LeftFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.LeftFlank,Loser1=self.Force2.LeftFlank.Target,Winner2=self.Force2.CentreFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.LeftFlank,Damage=Damage,DamagedFlank2=self.Force2.CentreFlank)
+                        self.round_casualties(Winner1=self.Force2.LeftFlank.Target,Loser1=self.Force2.LeftFlank,Loser2=self.Force2.CentreFlank)
+                    else:
+                        pass
+                elif((self.Force2.RightFlank.Target is self.Force2.LeftFlank.Target) & (not self.Force2.RightFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.LeftFlank,Force2Flank1=self.Force2.LeftFlank.Target,Force1Flank2=self.Force2.RightFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.LeftFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.LeftFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.LeftFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.LeftFlank,Loser1=self.Force2.LeftFlank.Target,Winner2=self.Force2.RightFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.LeftFlank,Damage=Damage,DamagedFlank2=self.Force2.RightFlank)
+                        self.round_casualties(Winner1=self.Force2.LeftFlank.Target,Loser1=self.Force2.LeftFlank,Loser2=self.Force2.RightFlank)
+                    else:
+                        pass
+                else:
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.LeftFlank,Force2Flank1=self.Force2.LeftFlank.Target)
+                    Flank1Roll = self.land_combat_roll(self.Force2.LeftFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.LeftFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.LeftFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.LeftFlank,Loser1=self.Force2.LeftFlank.Target)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.LeftFlank,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.LeftFlank.Target,Loser1=self.Force2.LeftFlank)
+                    else:
+                        pass
+        if(not self.Force2.CentreFlank.Defeated):
+            if(self.Force2.CentreFlank.Target.Target is self.Force2.CentreFlank):
+                if(((self.Force2.LeftFlank.Target is self.Force2.CentreFlank.Target) & (not self.Force2.LeftFlank.Defeated)) & ((self.Force2.RightFlank.Target is self.Force2.CentreFlank.Target) & (not self.Force2.CentreFlank.Defeated))):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.CentreFlank,Force2Flank1=self.Force2.CentreFlank.Target,Force1Flank2=self.Force2.LeftFlank,Force1Flank3=self.Force2.RightFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.CentreFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.CentreFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.CentreFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.CentreFlank,Loser1=self.Force2.CentreFlank.Target,Winner2=self.Force2.LeftFlank,Winner3=self.Force2.RightFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.CentreFlank,Damage=Damage,DamagedFlank2=self.Force2.LeftFlank,DamagedFlank3=self.Force2.RightFlank)
+                        self.round_casualties(Winner1=self.Force2.CentreFlank.Target,Loser1=self.Force2.CentreFlank,Loser2=self.Force2.LeftFlank,Loser3=self.Force2.RightFlank)
+                    else:
+                        pass
+                elif((self.Force2.LeftFlank.Target is self.Force2.CentreFlank.Target) & (not self.Force2.LeftFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.CentreFlank,Force2Flank1=self.Force2.CentreFlank.Target,Force1Flank2=self.Force2.LeftFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.CentreFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.CentreFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.CentreFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.CentreFlank,Loser1=self.Force2.CentreFlank.Target,Winner2=self.Force2.LeftFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.CentreFlank,Damage=Damage,DamagedFlank2=self.Force2.LeftFlank)
+                        self.round_casualties(Winner1=self.Force2.CentreFlank.Target,Loser1=self.Force2.CentreFlank,Loser2=self.Force2.LeftFlank)
+                    else:
+                        pass
+                elif((self.Force2.RightFlank.Target is self.Force2.CentreFlank.Target) & (not self.Force2.RightFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.CentreFlank,Force2Flank1=self.Force2.CentreFlank.Target,Force1Flank2=self.Force2.RightFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.CentreFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.CentreFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.CentreFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.CentreFlank,Loser1=self.Force2.CentreFlank.Target,Winner2=self.Force2.RightFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.CentreFlank,Damage=Damage,DamagedFlank2=self.Force2.RightFlank)
+                        self.round_casualties(Winner1=self.Force2.CentreFlank.Target,Loser1=self.Force2.CentreFlank,Loser2=self.Force2.RightFlank)
+                    else:
+                        pass
+                else:
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.CentreFlank,Force2Flank1=self.Force2.CentreFlank.Target)
+                    Flank1Roll = self.land_combat_roll(self.Force2.CentreFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.CentreFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.CentreFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.CentreFlank,Loser1=self.Force2.CentreFlank.Target)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.CentreFlank,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.CentreFlank.Target,Loser1=self.Force2.CentreFlank)
+                    else:
+                        pass
+        if(not self.Force2.RightFlank.Defeated):
+            if(self.Force2.RightFlank.Target.Target is self.Force2.RightFlank):
+                if(((self.Force2.CentreFlank.Target is self.Force2.RightFlank.Target) & (not self.Force2.CentreFlank.Defeated)) & ((self.Force2.LeftFlank.Target is self.Force2.RightFlank.Target) & (not self.Force2.LeftFlank.Defeated))):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.RightFlank,Force2Flank1=self.Force2.RightFlank.Target,Force1Flank2=self.Force2.CentreFlank,Force1Flank3=self.Force2.LeftFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.RightFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.RightFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.RightFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.RightFlank,Loser1=self.Force2.RightFlank.Target,Winner2=self.Force2.CentreFlank,Winner3=self.Force2.LeftFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.RightFlank,Damage=Damage,DamagedFlank2=self.Force2.CentreFlank,DamagedFlank3=self.Force2.LeftFlank)
+                        self.round_casualties(Winner1=self.Force2.RightFlank.Target,Loser1=self.Force2.RightFlank,Loser2=self.Force2.CentreFlank,Loser3=self.Force2.LeftFlank)
+                    else:
+                        pass
+                elif((self.Force2.CentreFlank.Target is self.Force2.RightFlank.Target) & (not self.Force2.CentreFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.RightFlank,Force2Flank1=self.Force2.RightFlank.Target,Force1Flank2=self.Force2.CentreFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.RightFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.RightFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.RightFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.RightFlank,Loser1=self.Force2.RightFlank.Target,Winner2=self.Force2.CentreFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.RightFlank,Damage=Damage,DamagedFlank2=self.Force2.CentreFlank)
+                        self.round_casualties(Winner1=self.Force2.RightFlank.Target,Loser1=self.Force2.RightFlank,Loser2=self.Force2.CentreFlank)
+                    else:
+                        pass
+                elif((self.Force2.LeftFlank.Target is self.Force2.RightFlank.Target) & (not self.Force2.LeftFlank.Defeated)):
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.RightFlank,Force2Flank1=self.Force2.RightFlank.Target,Force1Flank2=self.Force2.LeftFlank)
+                    Flank1Roll = self.land_combat_roll(self.Force2.RightFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.RightFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.RightFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.RightFlank,Loser1=self.Force2.RightFlank.Target,Winner2=self.Force2.LeftFlank)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.RightFlank,Damage=Damage,DamagedFlank2=self.Force2.LeftFlank)
+                        self.round_casualties(Winner1=self.Force2.RightFlank.Target,Loser1=self.Force2.RightFlank,Loser2=self.Force2.LeftFlank)
+                    else:
+                        pass
+                else:
+                    self.calculate_strength_bonus(Force1Flank1=self.Force2.RightFlank,Force2Flank1=self.Force2.RightFlank.Target)
+                    Flank1Roll = self.land_combat_roll(self.Force2.RightFlank)
+                    Flank2Roll = self.land_combat_roll(self.Force2.RightFlank.Target)
+                    if(Flank1Roll > Flank2Roll):
+                        Damage = Flank1Roll - Flank2Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.RightFlank.Target,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.RightFlank,Loser1=self.Force2.RightFlank.Target)
+                    if(Flank2Roll > Flank1Roll):
+                        Damage = Flank2Roll - Flank1Roll
+                        self.round_morale_damage(DamagedFlank1=self.Force2.RightFlank,Damage=Damage)
+                        self.round_casualties(Winner1=self.Force2.RightFlank.Target,Loser1=self.Force2.RightFlank)
+                    else:
+                        pass
+     
+    def reset_strength_bonuses(self):
+        """
+        Function to reset all flanks' Strength Bonus to 0.
+        """
+        self.Force1.LeftFlank.Strength_Bonus = 0
+        self.Force1.CentreFlank.Strength_Bonus = 0
+        self.Force1.RightFlank.Strength_Bonus = 0
+        self.Force2.LeftFlank.Strength_Bonus = 0
+        self.Force2.CentreFlank.Strength_Bonus = 0
+        self.Force2.RightFlank.Strength_Bonus = 0
     
     def reset_forces(self):
         """
@@ -350,6 +690,7 @@ class Battle:
         self.Force2.RightFlank.Casualties = 0
         self.Force2.RightFlank.Target = None
         self.Force2.RightFlank.Defeated = False
+        self.reset_strength_bonuses()
 
     def battle(self) -> int:
         """
@@ -361,9 +702,11 @@ class Battle:
         self.reset_forces()
         self.assign_starting_targets()
         while(
-            ((self.Force1.LeftFlank.Morale > self.Force1.LeftFlank.Retreat_Threshold) | (self.Force1.CentreFlank.Morale > self.Force1.CentreFlank.Retreat_Threshold) | (self.Force1.RightFlank.Morale > self.Force1.RightFlank.Retreat_Threshold))
+            ((not self.Force1.LeftFlank.Defeated) | (not self.Force1.CentreFlank.Defeated) | (not self.Force1.RightFlank.Defeated))
             &
-            ((self.Force2.LeftFlank.Morale > self.Force2.LeftFlank.Retreat_Threshold) | (self.Force2.CentreFlank.Morale > self.Force2.CentreFlank.Retreat_Threshold) | (self.Force2.RightFlank.Morale > self.Force2.RightFlank.Retreat_Threshold))
+            ((not self.Force2.LeftFlank.Defeated) | (not self.Force2.CentreFlank.Defeated) | (not self.Force2.RightFlank.Defeated))
         ):
+            self.reset_strength_bonuses()
             self.check_if_flanks_defeated()
             self.flank_damage()
+        self.reset_strength_bonuses()
