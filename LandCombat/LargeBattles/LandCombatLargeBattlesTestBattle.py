@@ -656,12 +656,49 @@ class Battle:
         Function to determine if flanks retreat or are routed.
         """
         if(self.Force1.LeftFlank.Defeated):
-            print()
+            if(not self.Force2.RightFlank.Defeated):
+                self.calculate_strength_bonus(self.Force1.LeftFlank,self.Force2.RightFlank)
+                self.attempt_retreat(self.Force1.LeftFlank,self.Force2.RightFlank)
+        if(self.Force1.CentreFlank.Defeated):
+            if(not self.Force2.CentreFlank.Defeated):
+                self.calculate_strength_bonus(self.Force1.CentreFlank,self.Force2.CentreFlank)
+                self.attempt_retreat(self.Force1.CentreFlank,self.Force2.CentreFlank)
+        if(self.Force1.RightFlank.Defeated):
+            if(not self.Force2.LeftFlank.Defeated):
+                self.calculate_strength_bonus(self.Force1.RightFlank,self.Force2.LeftFlank)
+                self.attempt_retreat(self.Force1.RightFlank,self.Force2.LeftFlank)
+        if(self.Force2.LeftFlank.Defeated):
+            if(not self.Force1.RightFlank.Defeated):
+                self.calculate_strength_bonus(self.Force2.LeftFlank,self.Force1.RightFlank)
+                self.attempt_retreat(self.Force2.LeftFlank,self.Force1.RightFlank)
+        if(self.Force2.CentreFlank.Defeated):
+            if(not self.Force1.CentreFlank.Defeated):
+                self.calculate_strength_bonus(self.Force2.CentreFlank,self.Force1.CentreFlank)
+                self.attempt_retreat(self.Force2.CentreFlank,self.Force1.CentreFlank)
+        if(self.Force2.RightFlank.Defeated):
+            if(not self.Force1.LeftFlank.Defeated):
+                self.calculate_strength_bonus(self.Force2.RightFlank,self.Force1.LeftFlank)
+                self.attempt_retreat(self.Force2.RightFlank,self.Force1.LeftFlank)
 
     def battle_winner(self) -> int:
         """
         Function to determine which force won the battle. 1 is Force 1, 2 is Force 2, 0 is error.
         """
+        if(
+            ((not self.Force1.LeftFlank.Defeated) | (not self.Force1.CentreFlank.Defeated) | (not self.Force1.RightFlank.Defeated))
+            &
+            ((self.Force2.LeftFlank.Defeated) | (self.Force2.CentreFlank.Defeated) | (self.Force2.RightFlank.Defeated))
+        ):
+            return 1
+        elif(
+            ((not self.Force2.LeftFlank.Defeated) | (not self.Force2.CentreFlank.Defeated) | (not self.Force2.RightFlank.Defeated))
+            &
+            ((self.Force1.LeftFlank.Defeated) | (self.Force1.CentreFlank.Defeated) | (self.Force1.RightFlank.Defeated))
+        ):
+            return 2
+        else:
+            print("Error in determining victor")
+            return 0
     
     def reset_strength_bonuses(self):
         """
