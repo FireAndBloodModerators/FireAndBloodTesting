@@ -82,8 +82,8 @@ for LevyNumber1 in LevyNumbers:
         print(f"{LevyNumber1} CV // {RetreatThreshold1} RT simulations complete")
 
     ### Save results to dataframe
-    WinPercentageDataFrame = pd.DataFrame(WinPercentageResults,columns=ColumnLabels,)
-    CasualtyDataFrame = pd.DataFrame(CasualtyResults,columns=ColumnLabels,)
+    WinPercentageDataFrame = pd.DataFrame(WinPercentageResults,columns=ColumnLabels)
+    CasualtyDataFrame = pd.DataFrame(CasualtyResults,columns=ColumnLabels)
 
     ### Save dataframes to csv file
     WinPercentageDataFrame.to_csv("LandCombat/SmallBattles/land_combat_small_battle_win_percentages.csv",index=False)
