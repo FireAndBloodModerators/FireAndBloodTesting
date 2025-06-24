@@ -19,6 +19,7 @@ class Force:
         LeftFlank (Flank): The left flank of the force.
         CentreFlank (Flank): The left flank of the force.
         RightFlank (Flank): The left flank of the force.
+        Defeated (bool): Whether or not the force has been defeated.
     """
 
     def __init__(self,MaA:int,Levies:int,LeftMaA: int|None = None,LeftLevies: int|None = None,CentreMaA: int|None = None,CentreLevies: int|None = None,RightMaA: int|None = None,RightLevies: int|None = None):
@@ -41,6 +42,7 @@ class Force:
         self.LeftFlank:Flank = Flank(self.LeftMaA,self.LeftLevies)
         self.CentreFlank:Flank = Flank(self.CentreMaA,self.CentreLevies)
         self.RightFlank:Flank = Flank(self.RightMaA,self.CentreLevies)
+        self.Defeated:bool = False
     
     def assign_flank_troops(self,LeftMaA: int|None,LeftLevies: int|None,CentreMaA: int|None,CentreLevies: int|None,RightMaA: int|None,RightLevies: int|None):
         """
