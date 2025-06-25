@@ -89,7 +89,7 @@ SimpleCasualtyDataFrame = pd.DataFrame(SimpleCasualtyResults,columns=SimpleColum
 ## Save simple dataframes to csv file
 SimpleWinPercentageDataFrame.to_csv("LandCombat/land_combat_simple_win_percentages.csv",index=False)
 SimpleCasualtyDataFrame.to_csv("LandCombat/land_combat_simple_casualties.csv",index=False)
-print("Simple sims End")
+print("Simple Sims End")
 
 print()
 
