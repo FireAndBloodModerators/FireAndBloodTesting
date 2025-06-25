@@ -17,7 +17,6 @@ class Flank:
         Terrain_Bonus (int): The bonus to combat rolls received from the terrain the flank is fighting in.
         Skill_Bonus (int): The bonus to combat rolls received from the flank's commander.
         Target (Flank|None): The enemy flank the flank is targetting.
-        Supporting (Flank|None): The friendly flank the flank is supporting.
         Supporters (list[Flank]): The friendly flanks that are supporting the flank.
         Defeated (bool): Whether or not the flank has been defeated.
     """
@@ -41,7 +40,6 @@ class Flank:
         self.Terrain_Bonus:int = 0
         self.Skill_Bonus:int = 0
         self.Target:Flank|None = None
-        self.Supporting:Flank|None = None
         self.Supporters:list[Flank] = []
         self.Defeated:bool = False
 

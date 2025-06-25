@@ -27,6 +27,18 @@ class Battle:
         self.Force2:Force = Force2
         self.CombatPairs:list[list[Flank]] = [[self.Force1.LeftFlank,self.Force2.RightFlank],[self.Force1.CentreFlank,self.Force2.CentreFlank],[self.Force1.RightFlank,self.Force2.LeftFlank]]
 
+    def reset_supporters(self):
+        """
+        Function to reset a flank's supporters.
+        """
+    
+    def assign_new_targets(self):
+        """
+        Function to determine new targets of each force's flanks.
+        """
+        self.CombatPairs = []
+        self.reset_supporters()
+    
     def check_if_forces_defeated(self):
         """
         Function to determine if all of a force's flanks are defeated.
@@ -53,7 +65,8 @@ class Battle:
         if((not self.Force2.RightFlank.Defeated) & (self.Force2.RightFlank.Morale <= self.Force2.RightFlank.Retreat_Threshold)):
             self.Force2.RightFlank.Defeated = True
         self.check_if_forces_defeated()
-        self.assign_new_targets()
+        if((not self.Force1.Defeated) & (not self.Force2.Defeated)):
+            self.assign_new_targets()
     
     def round_casualties(self,Winner:Flank,Loser:Flank):
         """
@@ -177,38 +190,32 @@ class Battle:
         self.Force1.LeftFlank.Morale = 100
         self.Force1.LeftFlank.Casualties = 0
         self.Force1.LeftFlank.Target = None
-        self.Force1.LeftFlank.Supporting = None
         self.Force1.LeftFlank.Supporters = []
         self.Force1.LeftFlank.Defeated = False
         self.Force1.CentreFlank.Morale = 100
         self.Force1.CentreFlank.Casualties = 0
         self.Force1.CentreFlank.Target = None
-        self.Force1.CentreFlank.Supporting = None
         self.Force1.CentreFlank.Supporters = []
         self.Force1.CentreFlank.Defeated = False
         self.Force1.RightFlank.Morale = 100
         self.Force1.RightFlank.Casualties = 0
         self.Force1.RightFlank.Target = None
-        self.Force1.RightFlank.Supporting = None
         self.Force1.RightFlank.Supporters = []
         self.Force1.RightFlank.Defeated = False
         self.Force2.Defeated = False
         self.Force2.LeftFlank.Morale = 100
         self.Force2.LeftFlank.Casualties = 0
         self.Force2.LeftFlank.Target = None
-        self.Force2.LeftFlank.Supporting = None
         self.Force2.LeftFlank.Supporters = []
         self.Force2.LeftFlank.Defeated = False
         self.Force2.CentreFlank.Morale = 100
         self.Force2.CentreFlank.Casualties = 0
         self.Force2.CentreFlank.Target = None
-        self.Force2.CentreFlank.Supporting = None
         self.Force2.CentreFlank.Supporters = []
         self.Force2.CentreFlank.Defeated = False
         self.Force2.RightFlank.Morale = 100
         self.Force2.RightFlank.Casualties = 0
         self.Force2.RightFlank.Target = None
-        self.Force2.RightFlank.Supporting = None
         self.Force2.RightFlank.Supporters = []
         self.Force2.RightFlank.Defeated = False
         self.reset_strength_bonuses()
