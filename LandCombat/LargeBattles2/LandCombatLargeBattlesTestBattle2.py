@@ -27,6 +27,92 @@ class Battle:
         self.Force2:Force = Force2
         self.CombatPairs:list[list[Flank]] = [[self.Force1.LeftFlank,self.Force2.RightFlank],[self.Force1.CentreFlank,self.Force2.CentreFlank],[self.Force1.RightFlank,self.Force2.LeftFlank]]
 
+    def battle_winner(self) -> int:
+        """
+        Function to determine which force won the battle. 1 is Force 1, 2 is Force 2, 0 is error.
+        """
+        if((not self.Force1.Defeated) & self.Force2.Defeated):
+            return 1
+        elif(self.Force1.Defeated & (not self.Force2.Defeated)):
+            return 2
+        else:
+            print("Error in determining victor")
+            return 0
+    
+    def reduce_casualties(self,ReducedCasualtiesFlank:Flank):
+        """
+        Function to reduce a flank's casualties taken based on its Strength Bonus.
+
+        Arguments:
+            ReducedCasualtiesFlank (Flank): The flank that is having its casualties reduced.
+        """
+        CasualtyReductionAmount = (ReducedCasualtiesFlank.Strength_Bonus * 5) if ((ReducedCasualtiesFlank.Strength_Bonus * 5) < 50) else 50
+        ReducedCasualtiesFlank.Casualties = round(ReducedCasualtiesFlank.Casualties * (1 - (CasualtyReductionAmount/100)))
+    
+    def reduce_flank_casualties(self):
+        """
+        Function to reduce a flank's casualties taken based on its Strength Bonus.
+        """
+        self.reduce_casualties(self.Force1.LeftFlank)
+        self.reduce_casualties(self.Force1.CentreFlank)
+        self.reduce_casualties(self.Force1.RightFlank)
+        self.reduce_casualties(self.Force2.LeftFlank)
+        self.reduce_casualties(self.Force2.CentreFlank)
+        self.reduce_casualties(self.Force2.RightFlank)
+    
+    def attempt_retreat(self,RetreatingFlank:Flank,NonRetreatingFlank:Flank):
+        """
+        Function to trigger a retreat or a rout for a defeated flank.
+
+        Arguments:
+            RetreatingFlank (Flank): The flank that is attempting to retreat.
+            NonRetreatingFlank (Flank): The flank that is attempting to retreat.
+        """
+        if(RetreatingFlank.Morale > 0):
+            RetreatThreshold = 10 + NonRetreatingFlank.Speed - RetreatingFlank.Speed
+            RetreatRoll = random.randint(1,20)
+            if(RetreatRoll < RetreatThreshold):
+                RetreatingFlank.Casualties += (random.randint(1,5) + random.randint(1,5))
+        else:
+            RetreatingFlank.Casualties += (random.randint(1,10) + random.randint(1,10) + random.randint(1,10) + 5)
+    
+    def flank_retreats(self):
+        """
+        Function to determine if flanks retreat or are routed.
+        """
+        if(self.Force1.LeftFlank.Defeated):
+            if(not self.Force2.RightFlank.Defeated):
+                self.calculate_strength_bonus(self.Force1.LeftFlank,self.Force1.LeftFlank.Combat_Value,self.Force2.RightFlank,self.Force2.RightFlank.Combat_Value)
+                self.attempt_retreat(self.Force1.LeftFlank,self.Force2.RightFlank)
+        if(self.Force1.CentreFlank.Defeated):
+            if(not self.Force2.CentreFlank.Defeated):
+                self.calculate_strength_bonus(self.Force1.CentreFlank,self.Force1.CentreFlank.Combat_Value,self.Force2.CentreFlank,self.Force2.CentreFlank.Combat_Value)
+                self.attempt_retreat(self.Force1.CentreFlank,self.Force2.CentreFlank)
+        if(self.Force1.RightFlank.Defeated):
+            if(not self.Force2.LeftFlank.Defeated):
+                self.calculate_strength_bonus(self.Force1.RightFlank,self.Force1.RightFlank.Combat_Value,self.Force2.LeftFlank,self.Force2.LeftFlank.Combat_Value)
+                self.attempt_retreat(self.Force1.RightFlank,self.Force2.LeftFlank)
+        if(self.Force2.LeftFlank.Defeated):
+            if(not self.Force1.RightFlank.Defeated):
+                self.calculate_strength_bonus(self.Force2.LeftFlank,self.Force2.LeftFlank.Combat_Value,self.Force1.RightFlank,self.Force1.RightFlank.Combat_Value)
+                self.attempt_retreat(self.Force2.LeftFlank,self.Force1.RightFlank)
+        if(self.Force2.CentreFlank.Defeated):
+            if(not self.Force1.CentreFlank.Defeated):
+                self.calculate_strength_bonus(self.Force2.CentreFlank,self.Force2.CentreFlank.Combat_Value,self.Force1.CentreFlank,self.Force1.CentreFlank.Combat_Value)
+                self.attempt_retreat(self.Force2.CentreFlank,self.Force1.CentreFlank)
+        if(self.Force2.RightFlank.Defeated):
+            if(not self.Force1.LeftFlank.Defeated):
+                self.calculate_strength_bonus(self.Force2.RightFlank,self.Force2.RightFlank.Combat_Value,self.Force1.LeftFlank,self.Force1.LeftFlank.Combat_Value)
+                self.attempt_retreat(self.Force2.RightFlank,self.Force1.LeftFlank)
+    
+    def base_strength_bonuses(self):
+        """
+        Function to get Strength Bonuses of each flank, compared to opposite flank.
+        """
+        self.calculate_strength_bonus(self.Force1.LeftFlank,self.Force1.LeftFlank.Combat_Value,self.Force2.RightFlank,self.Force2.RightFlank.Combat_Value)
+        self.calculate_strength_bonus(self.Force1.CentreFlank,self.Force1.CentreFlank.Combat_Value,self.Force2.CentreFlank,self.Force2.CentreFlank.Combat_Value)
+        self.calculate_strength_bonus(self.Force1.RightFlank,self.Force1.RightFlank.Combat_Value,self.Force2.LeftFlank,self.Force2.LeftFlank.Combat_Value)
+    
     def check_if_in_combat_pairs(self,FlankCheck:Flank) -> bool:
         """
         Function to determine new Combat Pairs and supporters.
@@ -37,13 +123,65 @@ class Battle:
         Returns:
             Result (bool): Result of the check, True for flank is in Combat Pairs, False for flank is not in Combat Pairs.
         """
+        Result = False
+        for CombatPair in self.CombatPairs:
+            if(FlankCheck in CombatPair):
+                Result = True
+                break
+        return Result
     
     def set_combat_pairs(self):
         """
         Function to determine new Combat Pairs and supporters.
         """
         if(not self.Force1.LeftFlank.Defeated):
-            self.check_if_in_combat_pairs(self.Force1.LeftFlank)
+            if(self.Force1.LeftFlank.Target.Target is self.Force1.LeftFlank):
+                if(not self.check_if_in_combat_pairs(self.Force1.LeftFlank)):
+                    self.CombatPairs.append([self.Force1.LeftFlank,self.Force1.LeftFlank.Target])
+                else:
+                    pass
+            else:
+                self.Force1.LeftFlank.Target.Target.Supporters.append(self.Force1.LeftFlank)
+        if(not self.Force1.CentreFlank.Defeated):
+            if(self.Force1.CentreFlank.Target.Target is self.Force1.CentreFlank):
+                if(not self.check_if_in_combat_pairs(self.Force1.CentreFlank)):
+                    self.CombatPairs.append([self.Force1.CentreFlank,self.Force1.CentreFlank.Target])
+                else:
+                    pass
+            else:
+                self.Force1.CentreFlank.Target.Target.Supporters.append(self.Force1.CentreFlank)
+        if(not self.Force1.RightFlank.Defeated):
+            if(self.Force1.RightFlank.Target.Target is self.Force1.RightFlank):
+                if(not self.check_if_in_combat_pairs(self.Force1.RightFlank)):
+                    self.CombatPairs.append([self.Force1.RightFlank,self.Force1.RightFlank.Target])
+                else:
+                    pass
+            else:
+                self.Force1.RightFlank.Target.Target.Supporters.append(self.Force1.RightFlank)
+        if(not self.Force2.LeftFlank.Defeated):
+            if(self.Force2.LeftFlank.Target.Target is self.Force2.LeftFlank):
+                if(not self.check_if_in_combat_pairs(self.Force2.LeftFlank)):
+                    self.CombatPairs.append([self.Force2.LeftFlank,self.Force2.LeftFlank.Target])
+                else:
+                    pass
+            else:
+                self.Force2.LeftFlank.Target.Target.Supporters.append(self.Force2.LeftFlank)
+        if(not self.Force2.CentreFlank.Defeated):
+            if(self.Force2.CentreFlank.Target.Target is self.Force2.CentreFlank):
+                if(not self.check_if_in_combat_pairs(self.Force2.CentreFlank)):
+                    self.CombatPairs.append([self.Force2.CentreFlank,self.Force2.CentreFlank.Target])
+                else:
+                    pass
+            else:
+                self.Force2.CentreFlank.Target.Target.Supporters.append(self.Force2.CentreFlank)
+        if(not self.Force2.RightFlank.Defeated):
+            if(self.Force2.RightFlank.Target.Target is self.Force2.RightFlank):
+                if(not self.check_if_in_combat_pairs(self.Force2.RightFlank)):
+                    self.CombatPairs.append([self.Force2.RightFlank,self.Force2.RightFlank.Target])
+                else:
+                    pass
+            else:
+                self.Force2.RightFlank.Target.Target.Supporters.append(self.Force2.RightFlank)
     
     def reset_supporters(self):
         """
@@ -188,9 +326,9 @@ class Battle:
         """
         Function to determine if all of a force's flanks are defeated.
         """
-        if(self.Force1.LeftFlank.Defeated & self.Force1.CentreFlank.Defeated & self.Force1.RightFlank):
+        if(self.Force1.LeftFlank.Defeated & self.Force1.CentreFlank.Defeated & self.Force1.RightFlank.Defeated):
             self.Force1.Defeated = True
-        if(self.Force2.LeftFlank.Defeated & self.Force2.CentreFlank.Defeated & self.Force2.RightFlank):
+        if(self.Force2.LeftFlank.Defeated & self.Force2.CentreFlank.Defeated & self.Force2.RightFlank.Defeated):
             self.Force2.Defeated = True
     
     def check_if_flanks_defeated(self):
@@ -378,5 +516,16 @@ class Battle:
         while((not self.Force1.Defeated) & (not self.Force2.Defeated)):
             self.reset_strength_bonuses()
             self.flank_damage()
+            # print("Force 1")
+            # print(f"Left Flank: {self.Force1.LeftFlank.Morale}/100, Centre Flank: {self.Force1.CentreFlank.Morale}/100, Right Flank: {self.Force1.RightFlank.Morale}/100")
+            # print()
+            # print("Force 2")
+            # print(f"Right Flank: {self.Force2.RightFlank.Morale}/100, Centre Flank: {self.Force2.CentreFlank.Morale}/100, Left Flank: {self.Force2.LeftFlank.Morale}/100")
+            # print()
             self.check_if_flanks_defeated()
         self.reset_strength_bonuses()
+        self.base_strength_bonuses()
+        self.flank_retreats()
+        self.reduce_flank_casualties()
+        Victor = self.battle_winner()
+        return Victor
