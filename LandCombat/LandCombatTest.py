@@ -7,6 +7,7 @@ from LandCombatTestBattle import Battle
 SimulationCount = 100000
 
 # SIMPLE TEST
+print("Simple Sims Start")
 ## Create list of levy numbers for testing use
 SimpleLevyNumbers = [100,200,300,400,500,600,700]
 
@@ -22,7 +23,6 @@ SimpleWinPercentageResults = []
 SimpleCasualtyResults = []
 
 ## Iterate through the SimpleLevyNumbers and SimpleRetreatThresholds list to create 2 forces and simulate battle between them
-print("Simple Sims")
 for LevyNumber1 in SimpleLevyNumbers:
 
     for RetreatThreshold1 in SimpleRetreatThresholds:
@@ -89,8 +89,12 @@ SimpleCasualtyDataFrame = pd.DataFrame(SimpleCasualtyResults,columns=SimpleColum
 ## Save simple dataframes to csv file
 SimpleWinPercentageDataFrame.to_csv("LandCombat/land_combat_simple_win_percentages.csv",index=False)
 SimpleCasualtyDataFrame.to_csv("LandCombat/land_combat_simple_casualties.csv",index=False)
+print("Simple sims End")
+
+print()
 
 # ADVANCED TEST
+print("Advanced Sims Start")
 ## Create list of levy numbers for testing use
 AdvancedLevyNumbers = [100,120,140,160,180,200,220,240,260,280,300,320,340,360,380,400,420,440,460,480,500,520,540,560,580,600,620,640,660,680,700]
 
@@ -173,3 +177,4 @@ AdvancedCasualtyDataFrame = pd.DataFrame(AdvancedCasualtyResults,columns=Advance
 ## Save Advanced dataframes to csv file
 AdvancedWinPercentageDataFrame.to_csv("LandCombat/land_combat_advanced_win_percentages.csv",index=False)
 AdvancedCasualtyDataFrame.to_csv("LandCombat/land_combat_advanced_casualties.csv",index=False)
+print("Advanced Sims End")
