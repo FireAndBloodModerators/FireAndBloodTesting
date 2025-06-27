@@ -136,7 +136,7 @@ for LevyNumber1 in AdvancedLevyNumbers:
                 ##### Create battle between Force 1 and 2
                 TestBattle = Battle(Force1,Force2)
 
-                ##### Run sims 10,000 times
+                ##### Run sims
                 for x in range(SimulationCount):
                     ###### Run battle between Force 1 and 2
                     BattleResult = TestBattle.battle()
