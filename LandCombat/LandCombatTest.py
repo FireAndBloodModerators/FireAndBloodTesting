@@ -96,10 +96,10 @@ print()
 # ADVANCED TEST
 print("Advanced Sims Start")
 ## Create list of levy numbers for testing use
-AdvancedLevyNumbers = [100,120,140,160,180,200,220,240,260,280,300,320,340,360,380,400,420,440,460,480,500,520,540,560,580,600,620,640,660,680,700]
+AdvancedLevyNumbers = [100,125,150,175,200,225,250,275,300,325,350,375,400,425,450,475,500,525,550,575,600,625,650,675,700]
 
 ## Create list of retreat thresholds for testing use
-AdvancedRetreatThresholds = [95,90,85,80,75,70,65,60,55,50,45,40,35,30,25,20,15,10,5,0]
+AdvancedRetreatThresholds = [95,90,80,70,60,50,40,30,20,10,0]
 
 ## Create column labels for later use
 AdvancedColumnLabels = [f"{LevyNumber} CV // {RetreatThreshold} RT" for LevyNumber in AdvancedLevyNumbers for RetreatThreshold in AdvancedRetreatThresholds]
