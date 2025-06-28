@@ -4,7 +4,7 @@ from LandCombatTestForce import Force
 from LandCombatTestBattle import Battle
 
 ## SET SIMULATIONS COUNT
-SimulationCount = 100000
+SimulationCount = 10000
 
 # SIMPLE TEST
 print("Simple Sims Start")
