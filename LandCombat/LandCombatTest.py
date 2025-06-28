@@ -12,7 +12,7 @@ print("Simple Sims Start")
 SimpleLevyNumbers = [100,200,300,400,500,600,700]
 
 ## Create list of retreat thresholds for testing use
-SimpleRetreatThresholds = [95,50,0]
+SimpleRetreatThresholds = [80,50,0]
 
 ## Create column labels for later use
 SimpleColumnLabels = [f"{LevyNumber} CV // {RetreatThreshold} RT" for LevyNumber in SimpleLevyNumbers for RetreatThreshold in SimpleRetreatThresholds]
@@ -99,7 +99,7 @@ print("Advanced Sims Start")
 AdvancedLevyNumbers = [100,125,150,175,200,225,250,275,300,325,350,375,400,425,450,475,500,525,550,575,600,625,650,675,700]
 
 ## Create list of retreat thresholds for testing use
-AdvancedRetreatThresholds = [95,90,80,70,60,50,40,30,20,10,0]
+AdvancedRetreatThresholds = [80,70,60,50,40,30,20,10,0]
 
 ## Create column labels for later use
 AdvancedColumnLabels = [f"{LevyNumber} CV // {RetreatThreshold} RT" for LevyNumber in AdvancedLevyNumbers for RetreatThreshold in AdvancedRetreatThresholds]
