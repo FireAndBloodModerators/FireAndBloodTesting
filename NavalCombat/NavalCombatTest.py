@@ -9,13 +9,13 @@ SimulationCount = 10000
 # SIMPLE TEST
 print("Simple Sims Start")
 ## Create list of galley numbers for testing use
-SimpleGalleyNumbers = [10,20,30,40,50,60,70]
+SimpleCogNumbers = [10,20,30,40,50,60,70,80,90,100,110,120,130]
 
 ## Create list of retreat thresholds for testing use
-SimpleRetreatThresholds = [80,50,0]
+SimpleRetreatThresholds = [0]
 
 ## Create column labels for later use
-SimpleColumnLabels = [f"{GalleyNumber*6} CV // {RetreatThreshold} RT" for GalleyNumber in SimpleGalleyNumbers for RetreatThreshold in SimpleRetreatThresholds]
+SimpleColumnLabels = [f"{CogNumber} CV // {RetreatThreshold} RT" for CogNumber in SimpleCogNumbers for RetreatThreshold in SimpleRetreatThresholds]
 SimpleColumnLabels.insert(0,"")
 
 ## Initialise results list
@@ -23,21 +23,21 @@ SimpleWinPercentageResults = []
 SimpleCasualtyResults = []
 
 ## Iterate through the SimpleGalleyNumbers and SimpleRetreatThresholds list to create 2 fleets and simulate battle between them
-for GalleyNumber1 in SimpleGalleyNumbers:
+for CogNumber1 in SimpleCogNumbers:
 
     for RetreatThreshold1 in SimpleRetreatThresholds:
         #### Create Force 1
-        Fleet1 = Fleet(0,GalleyNumber1,0,0,0,RetreatThreshold1)
+        Fleet1 = Fleet(0,0,0,0,CogNumber1,RetreatThreshold1)
 
         #### Initialise new results lists
-        NewWinPercentageResults = [f"{GalleyNumber1*6} CV // {RetreatThreshold1} RT"]
-        NewCasualtyPercentageResults = [f"{GalleyNumber1*6} CV // {RetreatThreshold1} RT"]
+        NewWinPercentageResults = [f"{CogNumber1} CV // {RetreatThreshold1} RT"]
+        NewCasualtyPercentageResults = [f"{CogNumber1} CV // {RetreatThreshold1} RT"]
 
-        for GalleyNumber2 in SimpleGalleyNumbers:
+        for CogNumber2 in SimpleCogNumbers:
 
             for RetreatThreshold2 in SimpleRetreatThresholds:
                 ##### Create Force 2
-                Fleet2 = Fleet(0,GalleyNumber2,0,0,0,RetreatThreshold2)
+                Fleet2 = Fleet(0,0,0,0,CogNumber2,RetreatThreshold2)
 
                 ##### Create variables to track wins and casualties
                 Fleet1Wins = 0
@@ -62,8 +62,8 @@ for GalleyNumber1 in SimpleGalleyNumbers:
                         pass
 
                     ###### Increment casualty count of both sides
-                    Force1Casualties += Fleet1.Casualties
-                    Force2Casualties += Fleet2.Casualties
+                    Fleet1Casualties += Fleet1.Casualties
+                    Fleet2Casualties += Fleet2.Casualties
 
                 ##### Calculate win percentage and average casualties of each fleet
                 Fleet1WinPercentage = round((Fleet1Wins/SimulationCount)*100,2)
@@ -80,7 +80,7 @@ for GalleyNumber1 in SimpleGalleyNumbers:
         SimpleCasualtyResults.append(NewCasualtyPercentageResults)
 
         #### Checkpoint
-        print(f"{GalleyNumber1*6} CV // {RetreatThreshold1} RT simulations complete")
+        print(f"{CogNumber1} CV // {RetreatThreshold1} RT simulations complete")
 
 ## Save simple results to dataframe
 SimpleWinPercentageDataFrame = pd.DataFrame(SimpleWinPercentageResults,columns=SimpleColumnLabels)

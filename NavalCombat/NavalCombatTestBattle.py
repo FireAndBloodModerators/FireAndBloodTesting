@@ -32,11 +32,11 @@ class Battle:
         if(self.Fleet1.Combat_Value > self.Fleet2.Combat_Value):
             Strength_Percentage = ((self.Fleet1.Combat_Value/self.Fleet2.Combat_Value)-1)*100
             if(Strength_Percentage >= 5):
-                self.Fleet1.Strength_Bonus = math.ceil(Strength_Percentage/20)
+                self.Fleet1.Strength_Bonus = math.ceil(Strength_Percentage/40)
         if(self.Fleet2.Combat_Value > self.Fleet1.Combat_Value):
             Strength_Percentage = ((self.Fleet2.Combat_Value/self.Fleet1.Combat_Value)-1)*100
             if(Strength_Percentage >= 5):
-                self.Fleet2.Strength_Bonus = math.ceil(Strength_Percentage/20)
+                self.Fleet2.Strength_Bonus = math.ceil(Strength_Percentage/40)
         else:
             pass
 
@@ -72,7 +72,7 @@ class Battle:
             Loser (Fleet): The Fleet that lost the battle round.
         """
         Winner.Casualties += 1
-        Loser.Casualties += (random.randint(1,5) + 3)
+        Loser.Casualties += (random.randint(1,3) + 1)
 
     def reduce_casualties(self,ReducedCasualtiesFleet:Fleet):
         """
