@@ -96,9 +96,9 @@ class Battle:
             RetreatThreshold = 8 + (NonRetreatingFleet.Speed/2) - (RetreatingFleet.Speed/2)
             RetreatRoll = random.randint(1,20)
             if(RetreatRoll < RetreatThreshold):
-                RetreatingFleet.Casualties += (random.randint(1,10) + random.randint(1,10))
+                RetreatingFleet.Casualties += (random.randint(1,5) + random.randint(1,5) + 5)
         else:
-            RetreatingFleet.Casualties += (random.randint(1,20) + random.randint(1,20) + random.randint(1,20) + 10)
+            RetreatingFleet.Casualties += (random.randint(1,20) + random.randint(1,20) + 10)
 
     def reset_fleets(self):
         """
