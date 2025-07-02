@@ -13,6 +13,7 @@ class Siege:
         SiegeRollBonus (int): The bonus to the Siege's Siege Roll.
         BesiegersCasualties (int): The casualty percentage taken by the besiegers.
         DefendersCasualties (int): The casualty percentage taken by the defenders.
+        SiegeDuration (int): The duration of the Siege, in months.
     """
 
     def __init__(self,HoldfastSize:int,OuterWallsDV:int):
@@ -25,13 +26,14 @@ class Siege:
         """
         self.HoldfastSize:int = HoldfastSize
         self.OuterWallsDV:int = OuterWallsDV
-        self.SiegeRollBonus:int = self.calculate_siege_roll_bonus()
+        self.SiegeRollBonus:int = self.calculate_starting_siege_roll_malus()
         self.BesiegersCasualties:int = 0
         self.DefendersCasualties:int = 0
+        self.SiegeDuration:int = 0
 
-    def calculate_siege_roll_bonus(self) -> int:
+    def calculate_starting_siege_roll_malus(self) -> int:
         """
-        Function to calculate the starting Siege Roll Bonus based off of Holdfast Size and Outer Walls DV.
+        Function to calculate the starting Siege Roll malus based off of Holdfast Size and Outer Walls DV.
 
         Returns:
             int: The starting bonus to the Siege Rolls.
@@ -48,6 +50,7 @@ class Siege:
         Returns:
             int: Whether or not the Siege has ended. 1 for surrender, 2 for continue.
         """
+        self.SiegeDuration += 1
         BaseSiegeRoll = random.randint(1,20)
         SiegeRoll = BaseSiegeRoll + self.SiegeRollBonus
         if(SiegeRoll <= 6):
@@ -69,3 +72,31 @@ class Siege:
         elif(SiegeRoll <= 27):
             self.SiegeRollBonus += 4
             self.DefendersCasualties += (20 * ((100-self.DefendersCasualties)/100))
+            return 2
+        else:
+            return 1
+        
+    def reset_siege(self):
+        """
+        Function to reset Siege statistics to beginning values.
+        """
+        self.SiegeRollBonus = self.calculate_starting_siege_roll_malus()
+        self.BesiegersCasualties = 0
+        self.DefendersCasualties = 0
+        self.SiegeDuration = 0
+
+    def siege(self) -> list[int]:
+        """
+        Function to simulate a Siege.
+
+        Returns:
+            Results (list[int]): The results of the Siege, including duration, besiegers' casualties, and defenders' casualties.
+        """
+        self.reset_siege()
+        SiegeOver = False
+        while(not SiegeOver):
+            SiegeRollResult = self.siege_roll()
+            if(SiegeRollResult == 1):
+                SiegeOver = True
+        Results:list[int] = [self.SiegeDuration,self.BesiegersCasualties,self.DefendersCasualties]
+        return Results
