@@ -97,3 +97,63 @@ OuterWallsDataframe = pd.DataFrame(OuterWallsResults,columns=ColumnLabels)
 ### Save dataframe to csv file
 OuterWallsDataframe.to_csv("Sieges/outer_walls_siege_results.csv",index=False)
 print("Outer Walls Sims End")
+
+print()
+
+## OUTER WALLS & HOLDFAST TESTS
+print("Outer Walls & Holdfast Sims Start")
+
+### Create list of Outer Walls DVs
+OuterWallsDVs = [1.5,2,3,4]
+
+### Create list of applicable Holdfast Sizes
+HoldfastSizesAdjusted = [1,2,3,4,5,6]
+
+### Initialise results list
+OuterWallsHoldfastResults = []
+
+### Iterate through Outer Walls DVs and generate Siege object
+for OuterWallsDV in OuterWallsDVs:
+
+    for HoldfastSizeAdjusted in HoldfastSizesAdjusted:
+        #### Check if Holdfast Size is too big for Outer Walls
+        if((OuterWallsDV == 1.5) & (HoldfastSizeAdjusted > 2)):
+            break
+        if((OuterWallsDV == 2) & (HoldfastSizeAdjusted > 4)):
+            break
+        if((OuterWallsDV == 3) & (HoldfastSizeAdjusted > 5)):
+            break
+        
+        #### Create Siege object
+        TestSiege = Siege(HoldfastSizeAdjusted,OuterWallsDV)
+
+        #### Create lists for results
+        OuterWallsDVHoldfastSizeAdjustedSiegeDurations = []
+        OuterWallsDVHoldfastSizeAdjustedBesiegersCasualties = []
+        OuterWallsDVHoldfastSizeAdjustedDefendersCasualties = []
+
+        #### Run sims
+        for x in range(SimulationCount):
+            ##### Call Siege function to get results
+            OuterWallsDVHoldfastSizeAdjustedResults = TestSiege.double_siege()
+
+            ##### Append results to applicable list
+            OuterWallsDVHoldfastSizeAdjustedSiegeDurations.append(OuterWallsDVHoldfastSizeAdjustedResults[0])
+            OuterWallsDVHoldfastSizeAdjustedBesiegersCasualties.append(OuterWallsDVHoldfastSizeAdjustedResults[1])
+            OuterWallsDVHoldfastSizeAdjustedDefendersCasualties.append(OuterWallsDVHoldfastSizeAdjustedResults[2])
+        
+        #### Calculate end results
+        OuterWallsDVHoldfastSizeAdjustedNewResults = [f"Outer Walls DV {OuterWallsDV} // Holdfast Size {HoldfastSizeAdjusted}",max(OuterWallsDVHoldfastSizeAdjustedSiegeDurations),round((sum(OuterWallsDVHoldfastSizeAdjustedSiegeDurations)/len(OuterWallsDVHoldfastSizeAdjustedSiegeDurations)),1),min(OuterWallsDVHoldfastSizeAdjustedSiegeDurations),f"{round((sum(OuterWallsDVHoldfastSizeAdjustedBesiegersCasualties)/len(OuterWallsDVHoldfastSizeAdjustedBesiegersCasualties)),2)}%",f"{round((sum(OuterWallsDVHoldfastSizeAdjustedDefendersCasualties)/len(OuterWallsDVHoldfastSizeAdjustedDefendersCasualties)),2)}%"]
+
+        #### Append new results to results list
+        OuterWallsHoldfastResults.append(OuterWallsDVHoldfastSizeAdjustedNewResults)
+
+        #### Checkpoint
+        print(f"Outer Walls DV {OuterWallsDV} // Holdfast Size {HoldfastSizeAdjusted} simulations complete")
+
+### Save results to dataframe
+OuterWallsHoldfastDataframe = pd.DataFrame(OuterWallsHoldfastResults,columns=ColumnLabels)
+
+### Save dataframe to csv file
+OuterWallsHoldfastDataframe.to_csv("Sieges/outer_walls_and_holdfast_siege_results.csv",index=False)
+print("Outer Walls & Holdfast Sims End")

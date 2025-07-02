@@ -10,6 +10,7 @@ class Siege:
     Attributes:
         HoldfastSize (int): The Size of the Holdfast being besieged.
         OuterWallsDV (int): The DV of the Outer Walls being besieged.
+        OuterWallsExist (bool): Whether or not the defenders have Outer Walls.
         SiegeRollBonus (int): The bonus to the Siege's Siege Roll.
         BesiegersCasualties (int): The casualty percentage taken by the besiegers.
         DefendersCasualties (int): The casualty percentage taken by the defenders.
@@ -26,6 +27,10 @@ class Siege:
         """
         self.HoldfastSize:int = HoldfastSize
         self.OuterWallsDV:int = OuterWallsDV
+        if(self.OuterWallsDV > 0):
+            self.OuterWallsExist = True
+        else:
+            self.OuterWallsExist = False
         self.SiegeRollBonus:int = self.calculate_starting_siege_roll_malus()
         self.BesiegersCasualties:int = 0
         self.DefendersCasualties:int = 0
@@ -38,10 +43,28 @@ class Siege:
         Returns:
             int: The starting malus to the Siege Rolls.
         """
-        if(self.OuterWallsDV > 0):
+        if(self.OuterWallsExist):
             return (5 - math.floor(self.OuterWallsDV))
         else:
             return (5 - self.HoldfastSize)
+        
+    def calculate_starting_holdfast_siege_roll_malus(self) -> int:
+        """
+        Function to calculate the starting Siege Roll malus based off of Holdfast Size.
+
+        Returns:
+            int: The starting malus to the Siege Rolls.
+        """
+        return (5 - self.HoldfastSize)
+    
+    def calculate_starting_outer_walls_siege_roll_malus(self) -> int:
+        """
+        Function to calculate the starting Siege Roll malus based off of Outer Walls DV.
+
+        Returns:
+            int: The starting malus to the Siege Rolls.
+        """
+        return (5 - math.floor(self.OuterWallsDV))
         
     def siege_roll(self):
         """
@@ -80,6 +103,10 @@ class Siege:
         """
         Function to reset Siege statistics to beginning values.
         """
+        if(self.OuterWallsDV > 0):
+            self.OuterWallsExist = True
+        else:
+            self.OuterWallsExist = False
         self.SiegeRollBonus = self.calculate_starting_siege_roll_malus()
         self.BesiegersCasualties = 0
         self.DefendersCasualties = 0
@@ -94,6 +121,30 @@ class Siege:
         """
         self.reset_siege()
         SiegeOver = False
+        while(not SiegeOver):
+            SiegeRollResult = self.siege_roll()
+            if(SiegeRollResult == 1):
+                SiegeOver = True
+        Results:list[int] = [self.SiegeDuration,self.BesiegersCasualties,self.DefendersCasualties]
+        return Results
+    
+    def double_siege(self) -> list[int]:
+        """
+        Function to simulate a Siege of Outer Walls and an inner Holdfast.
+
+        Returns:
+            Results (list[int]): The results of the Siege, including duration, besiegers' casualties, and defenders' casualties.
+        """
+        self.reset_siege()
+        SiegeOver = False
+        HoldfastMalus = self.calculate_starting_holdfast_siege_roll_malus()
+        OuterWallsMalus = self.calculate_starting_siege_roll_malus()
+        while(self.OuterWallsExist):
+            SiegeRollResult = self.siege_roll()
+            if(SiegeRollResult == 1):
+                self.OuterWallsExist = False
+        self.SiegeRollBonus -= OuterWallsMalus
+        self.SiegeRollBonus += HoldfastMalus
         while(not SiegeOver):
             SiegeRollResult = self.siege_roll()
             if(SiegeRollResult == 1):
