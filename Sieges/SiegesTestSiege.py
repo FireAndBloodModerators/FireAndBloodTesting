@@ -36,12 +36,12 @@ class Siege:
         Function to calculate the starting Siege Roll malus based off of Holdfast Size and Outer Walls DV.
 
         Returns:
-            int: The starting bonus to the Siege Rolls.
+            int: The starting malus to the Siege Rolls.
         """
         if(self.OuterWallsDV > 0):
-            return math.floor(self.OuterWallsDV)
+            return (5 - math.floor(self.OuterWallsDV))
         else:
-            return math.floor(self.HoldfastSize/2)
+            return (5 - self.HoldfastSize)
         
     def siege_roll(self):
         """
@@ -53,23 +53,23 @@ class Siege:
         self.SiegeDuration += 1
         BaseSiegeRoll = random.randint(1,20)
         SiegeRoll = BaseSiegeRoll + self.SiegeRollBonus
-        if(SiegeRoll <= 6):
+        if(SiegeRoll <= 4):
             if(BaseSiegeRoll == 1):
                 self.BesiegersCasualties += (10 * ((100-self.BesiegersCasualties)/100))
             return 2
-        elif(SiegeRoll <= 15):
+        elif(SiegeRoll <= 8):
             self.SiegeRollBonus += 2
             self.DefendersCasualties += (2 * ((100-self.DefendersCasualties)/100))
             return 2
-        elif(SiegeRoll <= 19):
+        elif(SiegeRoll <= 15):
             self.SiegeRollBonus += 4
             self.DefendersCasualties += (6 * ((100-self.DefendersCasualties)/100))
             return 2
-        elif(SiegeRoll <= 22):
+        elif(SiegeRoll <= 19):
             self.SiegeRollBonus += 8
             self.DefendersCasualties += (10 * ((100-self.DefendersCasualties)/100))
             return 2
-        elif(SiegeRoll <= 27):
+        elif(SiegeRoll <= 23):
             self.SiegeRollBonus += 4
             self.DefendersCasualties += (20 * ((100-self.DefendersCasualties)/100))
             return 2
