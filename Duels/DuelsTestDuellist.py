@@ -16,17 +16,41 @@ class Duellist:
         Deaths (int): The number of times the Duellist has died.
     """
 
-    def __init__(self):
+    def __init__(self,WeaponType:str):
         """
         Initialiser function for a Duels Duellist.
+
+        Arguments:
+            WeaponType (str): What weapon the Duellist is wielding, determines DamageBonus.
         """
         self.Morale:int = 30
         self.DuelBonus:int = 0
-        self.DamageBonus:int = 0
+        self.DamageBonus:int = self.determine_damage_bonus(WeaponType)
         self.MinorInjuries:int = 0
         self.MajorInjuries:int = 0
         self.CriticalInjuries:int = 0
         self.Deaths:int = 0
+
+    def determine_damage_bonus(self,WeaponType:str) -> int:
+        """
+        Function to determine Duellist's Damage Bonus.
+
+        Arguments:
+            WeaponType (str): What weapon the Duellist is wielding, determines DamageBonus.
+
+        Returns:
+            int: The Duellist's Damage Bonus based on their weapon.
+        """
+        if(WeaponType is "VS"):
+            return 3
+        elif(WeaponType is "MW/FO"):
+            return 2
+        elif(WeaponType is "MW"):
+            return 1
+        elif(WeaponType is "FO"):
+            return 1
+        else:
+            return 0
 
     def duel_roll(self) -> tuple[int,int|None]:
         """
