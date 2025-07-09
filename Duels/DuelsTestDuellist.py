@@ -9,6 +9,7 @@ class Duellist:
     Attributes:
         Morale (int): The morale/fighting spirit of the Duellist.
         DuelBonus (int): The Duellist's bonus to Duel Rolls.
+        WeaponType (str): The weapon the Duellist is wielding.
         DamageBonus (int): The Duellist's bonus to Damage Rolls.
         MinorInjuries (int): The number of Minor Injuries the Duellist has taken.
         MajorInjuries (int): The number of Major Injuries the Duellist has taken.
@@ -25,29 +26,27 @@ class Duellist:
         """
         self.Morale:int = 30
         self.DuelBonus:int = 0
-        self.DamageBonus:int = self.determine_damage_bonus(WeaponType)
+        self.WeaponType = WeaponType
+        self.DamageBonus:int = self.determine_damage_bonus()
         self.MinorInjuries:int = 0
         self.MajorInjuries:int = 0
         self.CriticalInjuries:int = 0
         self.Deaths:int = 0
 
-    def determine_damage_bonus(self,WeaponType:str) -> int:
+    def determine_damage_bonus(self) -> int:
         """
         Function to determine Duellist's Damage Bonus.
-
-        Arguments:
-            WeaponType (str): What weapon the Duellist is wielding, determines DamageBonus.
 
         Returns:
             int: The Duellist's Damage Bonus based on their weapon.
         """
-        if(WeaponType is "VS"):
+        if(self.WeaponType is "VS"):
             return 3
-        elif(WeaponType is "MW/FO"):
+        elif(self.WeaponType is "MW/FO"):
             return 2
-        elif(WeaponType is "MW"):
+        elif(self.WeaponType is "MW"):
             return 1
-        elif(WeaponType is "FO"):
+        elif(self.WeaponType is "FO"):
             return 1
         else:
             return 0
