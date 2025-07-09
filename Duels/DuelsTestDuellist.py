@@ -16,17 +16,13 @@ class Duellist:
         Deaths (int): The number of times the Duellist has died.
     """
 
-    def __init__(self,DuelBonus:int,DamageBonus:int):
+    def __init__(self):
         """
         Initialiser function for a Duels Duellist.
-    
-        Arguments:
-            DuelBonus (int): The Duellist's bonus to Duel Rolls.
-            DamageBonus (int): The Duellist's bonus to Damage Rolls.
         """
         self.Morale:int = 30
-        self.DuelBonus:int = DuelBonus
-        self.DamageBonus:int = DamageBonus
+        self.DuelBonus:int = 0
+        self.DamageBonus:int = 0
         self.MinorInjuries:int = 0
         self.MajorInjuries:int = 0
         self.CriticalInjuries:int = 0
@@ -59,3 +55,30 @@ class Duellist:
         """
         DamageRoll = random.randint(1,5) + random.randint(1,5) + self.DamageBonus
         return DamageRoll
+    
+    def injury_roll_a(self):
+        """
+        Function to roll 1d100 on Injury Table A after Duellist receives a Critical Strike.
+        """
+        self.DuelBonus -= 2
+        InjuryRoll = random.randint(1,100)
+        if(InjuryRoll <= 5):
+            self.CriticalInjuries += 1
+        elif(InjuryRoll <= 50):
+            self.MajorInjuries += 1
+        else:
+            self.MinorInjuries += 1
+
+    def injury_roll_b(self):
+        """
+        Function to roll 1d100 on Injury Table B after Duellist is brought to 0 Morale.
+        """
+        InjuryRoll = random.randint(1,100)
+        if(InjuryRoll <= 30):
+            self.Deaths += 1
+        elif(InjuryRoll <= 40):
+            self.CriticalInjuries += 1
+        elif(InjuryRoll <= 70):
+            self.MajorInjuries += 1
+        else:
+            self.MinorInjuries += 1
