@@ -15,6 +15,7 @@ class Duellist:
         MajorInjuries (int): The number of Major Injuries the Duellist has taken.
         CriticalInjuries (int): The number of Critical Injuries the Duellist has taken.
         Deaths (int): The number of times the Duellist has died.
+        Defeated (bool): Whether or not the Duellist is defeated.
     """
 
     def __init__(self,WeaponType:str):
@@ -32,6 +33,7 @@ class Duellist:
         self.MajorInjuries:int = 0
         self.CriticalInjuries:int = 0
         self.Deaths:int = 0
+        self.Defeated:bool = False
 
     def determine_damage_bonus(self) -> int:
         """
