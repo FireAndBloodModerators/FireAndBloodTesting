@@ -32,12 +32,14 @@ class Duel:
         self.Duellist1.MajorInjuries = 0
         self.Duellist1.CriticalInjuries = 0
         self.Duellist1.Deaths = 0
+        self.Duellist1.Defeated = False
         self.Duellist2.Morale = 30
         self.Duellist2.DuelBonus = 0
         self.Duellist2.MinorInjuries = 0
         self.Duellist2.MajorInjuries = 0
         self.Duellist2.CriticalInjuries = 0
         self.Duellist2.Deaths = 0
+        self.Duellist2.Defeated = False
 
     def duel(self) -> int:
         """
@@ -77,9 +79,13 @@ class Duel:
             else:
                 pass
         if(self.Duellist1.Defeated & (not self.Duellist2.Defeated)):
+            if(self.Duellist1.Morale <= 0):
+                self.Duellist1.injury_roll_b()
             DuelResult = 2
             return DuelResult
         elif(self.Duellist2.Defeated & (not self.Duellist1.Defeated)):
+            if(self.Duellist2.Morale <= 0):
+                self.Duellist2.injury_roll_b()
             DuelResult = 1
             return DuelResult
         else:

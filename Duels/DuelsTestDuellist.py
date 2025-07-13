@@ -42,13 +42,13 @@ class Duellist:
         Returns:
             int: The Duellist's Damage Bonus based on their weapon.
         """
-        if(self.WeaponType is "VS"):
+        if(self.WeaponType == "VS"):
             return 3
-        elif(self.WeaponType is "MW/FO"):
+        elif(self.WeaponType == "MW/FO"):
             return 2
-        elif(self.WeaponType is "MW"):
+        elif(self.WeaponType == "MW"):
             return 1
-        elif(self.WeaponType is "FO"):
+        elif(self.WeaponType == "FO"):
             return 1
         else:
             return 0
