@@ -98,3 +98,16 @@ class Duellist:
         else:
             self.MinorInjuries += 1
             self.DuelBonus -= 2
+
+    def reset_duellist(self):
+        """
+        Function to reset duellist to original values.
+        """
+        self.Morale:int = 30
+        self.DuelBonus:int = 0
+        self.DamageBonus:int = self.determine_damage_bonus()
+        self.MinorInjuries:int = 0
+        self.MajorInjuries:int = 0
+        self.CriticalInjuries:int = 0
+        self.Deaths:int = 0
+        self.Defeated:bool = False
