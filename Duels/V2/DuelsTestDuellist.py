@@ -103,11 +103,11 @@ class Duellist:
         """
         Function to reset duellist to original values.
         """
-        self.Morale:int = 30
-        self.DuelBonus:int = 0
-        self.DamageBonus:int = self.determine_damage_bonus()
-        self.MinorInjuries:int = 0
-        self.MajorInjuries:int = 0
-        self.CriticalInjuries:int = 0
-        self.Deaths:int = 0
-        self.Defeated:bool = False
+        self.Morale = 30
+        self.DuelBonus = 0
+        self.DamageBonus = self.determine_damage_bonus()
+        self.MinorInjuries = 0
+        self.MajorInjuries = 0
+        self.CriticalInjuries = 0
+        self.Deaths = 0
+        self.Defeated = False

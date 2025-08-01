@@ -63,10 +63,10 @@ for WeaponType1 in WeaponTypes:
 
         ##### Calculate win percentage and statistics for Duellist 1
         Duellist1WinResults = round((Duellist1Wins/SimulationCount)*100,2)
-        Duellist1DeathResults = round((Duellist1Deaths/SimulationCount),1)
-        Duellist1CriticalInjuryResults = round((Duellist1CriticalInjuries/SimulationCount),1)
-        Duellist1MajorInjuryResults = round((Duellist1MajorInjuries/SimulationCount),1)
-        Duellist1MinorInjuryResults = round((Duellist1MinorInjuries/SimulationCount),1)
+        Duellist1DeathResults = round((Duellist1Deaths/SimulationCount),2)
+        Duellist1CriticalInjuryResults = round((Duellist1CriticalInjuries/SimulationCount),2)
+        Duellist1MajorInjuryResults = round((Duellist1MajorInjuries/SimulationCount),2)
+        Duellist1MinorInjuryResults = round((Duellist1MinorInjuries/SimulationCount),2)
 
         ##### Save statistics to new results lists
         NewWinResults.append(f"{Duellist1WinResults}% Winrate")
@@ -85,5 +85,5 @@ WeaponTypeInjuriesDataFrame = pd.DataFrame(WeaponTypesInjuriesResults,columns=We
 
 ## Save Weapon Types dataframes to csv file
 WeaponTypeWinPercentageDataFrame.to_csv("Duels/V2/duels_weapon_types_win_percentages.csv",index=False)
-WeaponTypeInjuriesDataFrame.to_csv("Duels/V2/duels_weapon_types_deaths.csv",index=False)
+WeaponTypeInjuriesDataFrame.to_csv("Duels/V2/duels_weapon_types_injuries.csv",index=False)
 print("Weapon Types Sims End")

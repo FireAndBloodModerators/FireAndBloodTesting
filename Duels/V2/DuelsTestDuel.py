@@ -31,6 +31,7 @@ class Duel:
         """
         self.Duellist1.reset_duellist()
         self.Duellist2.reset_duellist()
+        self.DuelOver = False
 
     def duel(self) -> int:
         """
