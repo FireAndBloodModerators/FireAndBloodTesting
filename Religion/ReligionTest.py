@@ -10,13 +10,13 @@ print("Conversion Simulations Start")
 
 # CREATE VARIABLE LISTS
 ReligionList = ["Faith of the Seven","Old Gods","Skagosi Old Gods","DrownedGod","DrownedGodII","Mother Rhoyne","Gods of Valyria","R'hllor"]
-PopulationList = [1000,25000,50000,75000,100000,125000,150000,175000,200000,225000,250000,275000,300000]
-ControlList = [75,80,85,90,95,100]
+PopulationList = [1000,50000,100000,150000,200000,250000,300000]
+ControlList = [85,90,95,100]
 OwnProvinceList = [True,False]
 
 # CREATE COLUMN LABELS
 DurationColumnLabels = ["Conversion Type","Duration"]
-FailureColumnLabels = ["Conversion Type","Chance of Failure"]
+FailureColumnLabels = ["Conversion Type","% Chance of Failure"]
 InjuryColumnLabels = ["Conversion Type","Average Deaths","Average Critical Injuries","Average Major Injuries","AverageMinorInjuries"]
 
 # INITIALISE RESULTS LISTS
@@ -75,7 +75,7 @@ for NewReligion in ReligionList:
 
                         ## Save statistics to new results lists
                         NewDurationResults.append(NewAverageDuration)
-                        NewFailureResults.append(f"{NewChanceOfFailure}%")
+                        NewFailureResults.append(NewChanceOfFailure)
                         NewInjuryResults.extend([NewAverageDeaths,NewAverageCriticalInjuries,NewAverageMajorInjuries,NewAverageMinorInjuries])
 
                         ## Save new results lists to results lists
@@ -98,3 +98,27 @@ ConversionInjuryDataFrame.to_csv("Religion/religion_average_injuries.csv",index=
 
 # END TEST
 print("Conversion Sims End")
+
+# PRINT AVERAGE VALUES
+print()
+AverageDuration = 0
+for DurationResult in ConversionDurationResults:
+    AverageDuration += DurationResult[1]
+print(f"Average Duration Overall: {round((AverageDuration/len(ConversionDurationResults)),2)}")
+AverageChanceOfFailure = 0
+for FailureResult in ConversionFailureResults:
+    AverageChanceOfFailure += FailureResult[1]
+print(f"Average Chance of Failure Overall: {round((AverageChanceOfFailure/len(ConversionFailureResults)),2)}")
+AverageDeaths = 0
+AverageCriticalInjuries = 0
+AverageMajorInjuries = 0
+AverageMinorInjuries = 0
+for InjuryResult in ConversionInjuryResults:
+    AverageDeaths += InjuryResult[1]
+    AverageCriticalInjuries += InjuryResult[2]
+    AverageMajorInjuries += InjuryResult[3]
+    AverageMinorInjuries += InjuryResult[4]
+print(f"Average Deaths Overall: {round((AverageDeaths/len(ConversionInjuryResults)),2)}")
+print(f"Average Critical Injuries Overall: {round((AverageCriticalInjuries/len(ConversionInjuryResults)),2)}")
+print(f"Average Major Injuries Overall: {round((AverageMajorInjuries/len(ConversionInjuryResults)),2)}")
+print(f"Average Minor Injuries Overall: {round((AverageMinorInjuries/len(ConversionInjuryResults)),2)}")

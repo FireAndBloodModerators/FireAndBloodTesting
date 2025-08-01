@@ -50,15 +50,15 @@ class Conversion:
             int: The modifier to the Conversion Roll from the new Religion.
         """
         if(self.NewReligion == "Skagosi Old Gods"):
-            return -8
+            return -6
         elif(self.NewReligion == "DrownedGod"):
-            return -4
-        elif(self.NewReligion == "DrownedGodInII"):
-            return 2
-        elif(self.NewReligion == "MotherRhoyne"):
-            return -4
-        elif(self.NewReligion == "R'hllor"):
             return -2
+        elif(self.NewReligion == "DrownedGodInII"):
+            return 1
+        elif(self.NewReligion == "MotherRhoyne"):
+            return -2
+        elif(self.NewReligion == "R'hllor"):
+            return -1
         else:
             return 0
         
@@ -70,11 +70,11 @@ class Conversion:
             int: The modifier to the Conversion Roll from the current Religion.
         """
         if(self.CurrentReligion == "Old Gods"):
-            return 2
+            return 1
         elif(self.CurrentReligion == "DrownedGod"):
-            return -2
+            return -1
         elif(self.CurrentReligion == "MotherRhoyne"):
-            return -2
+            return -1
         else:
             return 0
         
@@ -85,7 +85,7 @@ class Conversion:
         Returns:
             int: The modifier to the Conversion Roll from the total Population.
         """
-        return -(math.floor(self.Population/25000))
+        return -(math.floor(self.Population/50000))
     
     def determine_control_conversion_modifier(self) -> int:
         """
@@ -95,13 +95,13 @@ class Conversion:
             int: The modifier to the Conversion Roll from the Control.
         """
         if(self.OwnProvince):
-            if(self.Control > 75):
-                return (math.floor((self.Control-75)/5))
+            if(self.Control > 85):
+                return (math.floor((self.Control-85)/5))
             else:
                 return 0
         else:
-            if(self.Control > 75):
-                return -(math.floor((self.Control-75)/5))
+            if(self.Control > 85):
+                return -(math.floor((self.Control-85)/5))
             else:
                 return 0
     
@@ -117,8 +117,8 @@ class Conversion:
         ConversionRollModifier += self.determine_current_religion_conversion_modifier()
         ConversionRollModifier += self.determine_population_conversion_modifier()
         ConversionRollModifier += self.determine_control_conversion_modifier()
-        if(ConversionRollModifier < -8):
-            ConversionRollModifier = -8
+        if(ConversionRollModifier < -4):
+            ConversionRollModifier = -4
         return ConversionRollModifier
     
     def injury_roll(self):
@@ -144,36 +144,36 @@ class Conversion:
             ConversionFailed (bool): Whether the Conversion ended in failure.
         """
         ConversionRoll = random.randint(1,20) + self.ConversionRollModifer
-        if(ConversionRoll <= 5):
+        if(ConversionRoll <= 3):
             ConversionOver = True
             ConversionFailed = True
             self.injury_roll()
             return ConversionOver,ConversionFailed
-        elif(ConversionRoll <= 10):
+        elif(ConversionRoll <= 6):
             ConversionOver = False
             ConversionFailed = False
             return ConversionOver,ConversionFailed
-        elif(ConversionRoll <= 15):
+        elif(ConversionRoll <= 12):
             self.ConversionRollModifer += 1
             ConversionOver = False
             ConversionFailed = False
             return ConversionOver,ConversionFailed
-        elif(ConversionRoll <= 22):
+        elif(ConversionRoll <= 16):
             self.ConversionRollModifer += 2
             ConversionOver = False
             ConversionFailed = False
             return ConversionOver,ConversionFailed
-        elif(ConversionRoll <= 30):
+        elif(ConversionRoll <= 22):
             self.ConversionRollModifer += 4
             ConversionOver = False
             ConversionFailed = False
             return ConversionOver,ConversionFailed
-        elif(ConversionRoll <= 36):
+        elif(ConversionRoll <= 26):
             self.ConversionRollModifer += 6
             ConversionOver = False
             ConversionFailed = False
             return ConversionOver,ConversionFailed
-        elif(ConversionRoll <= 39):
+        elif(ConversionRoll <= 29):
             self.ConversionRollModifer += 8
             ConversionOver = False
             ConversionFailed = False
