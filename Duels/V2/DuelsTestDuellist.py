@@ -81,25 +81,20 @@ class Duellist:
         DamageRoll = random.randint(1,5) + random.randint(1,5) + self.DamageBonus
         return DamageRoll
 
-    def injury_roll(self) -> bool:
+    def injury_roll(self):
         """
         Function to make an Injury Roll after a Critical Strike.
-
-        Returns:
-            DuelOver (bool): Whether or not the Duel is over based on the injury taken.
         """
         InjuryRoll = random.randint(1,100)
-        DuelOver = False
         if(InjuryRoll <= 20):
             self.Deaths += 1
-            DuelOver = True
+            self.Defeated = True
         elif(InjuryRoll <= 40):
             self.CriticalInjuries += 1
-            DuelOver = True
+            self.Defeated = True
         elif(InjuryRoll <= 70):
             self.MajorInjuries += 1
             self.DuelBonus -= 2
         else:
             self.MinorInjuries += 1
             self.DuelBonus -= 2
-        return DuelOver
