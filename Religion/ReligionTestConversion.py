@@ -50,7 +50,7 @@ class Conversion:
             int: The modifier to the Conversion Roll from the new Religion.
         """
         if(self.NewReligion == "Skagosi Old Gods"):
-            return -6
+            return -4
         elif(self.NewReligion == "DrownedGod"):
             return -2
         elif(self.NewReligion == "DrownedGodInII"):
