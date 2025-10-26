@@ -46,14 +46,14 @@ class Duel:
             Duellist2Roll = self.Duellist2.duel_roll()
             if(Duellist1Roll > Duellist2Roll):
                 DuelRollDifference = Duellist1Roll - Duellist2Roll
-                if(DuelRollDifference >= 20):
+                if(DuelRollDifference >= 16):
                     self.Duellist2.injury_roll()
                     self.Duellist2.Morale -= self.Duellist1.damage_roll()
                 else:
                     self.Duellist2.Morale -= self.Duellist1.damage_roll()
             elif(Duellist2Roll > Duellist1Roll):
                 DuelRollDifference = Duellist2Roll - Duellist1Roll
-                if(DuelRollDifference >= 20):
+                if(DuelRollDifference >= 16):
                     self.Duellist1.injury_roll()
                     self.Duellist1.Morale -= self.Duellist2.damage_roll()
                 else:

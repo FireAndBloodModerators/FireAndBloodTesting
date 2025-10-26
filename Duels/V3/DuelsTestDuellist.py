@@ -18,7 +18,7 @@ class Duellist:
         Defeated (bool): Whether or not the Duellist is defeated.
     """
 
-    def __init__(self,WeaponType:str):
+    def __init__(self,SkillBonus:int):
         """
         Initialiser function for a Duels Duellist.
 
@@ -26,8 +26,9 @@ class Duellist:
             WeaponType (str): What weapon the Duellist is wielding, determines DamageBonus.
         """
         self.Morale:int = 30
-        self.DuelBonus:int = 0
-        self.WeaponType = WeaponType
+        self.DuelBonus:int = SkillBonus
+        self.OriginalDuelBonus:int = SkillBonus
+        self.WeaponType = "None"
         self.DamageBonus:int = self.determine_damage_bonus()
         self.MinorInjuries:int = 0
         self.MajorInjuries:int = 0
@@ -85,7 +86,7 @@ class Duellist:
         elif(InjuryRoll <= 20):
             self.CriticalInjuries += 1
             self.Defeated = True
-        elif(InjuryRoll <= 70):
+        elif(InjuryRoll <= 60):
             self.MajorInjuries += 1
             self.DuelBonus -= 2
         else:
@@ -97,7 +98,7 @@ class Duellist:
         Function to reset duellist to original values.
         """
         self.Morale = 30
-        self.DuelBonus = 0
+        self.DuelBonus = self.OriginalDuelBonus
         self.DamageBonus = self.determine_damage_bonus()
         self.MinorInjuries = 0
         self.MajorInjuries = 0
