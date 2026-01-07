@@ -8,7 +8,9 @@ class Duellist:
 
     Attributes:
         Morale (int): The morale/fighting spirit of the Duellist.
+        OriginalMorale (int): The original morale/fighting spirit of the Duellist, for resetting stats.
         DuelBonus (int): The Duellist's bonus to Duel Rolls.
+        OriginalDuelBonus (int) The Duellist's original bonus to Duel Rolls, for resetting stats.
         WeaponType (str): The weapon the Duellist is wielding.
         DamageBonus (int): The Duellist's bonus to Damage Rolls.
         MinorInjuries (int): The number of Minor Injuries the Duellist has taken.
@@ -18,15 +20,17 @@ class Duellist:
         Defeated (bool): Whether or not the Duellist is defeated.
     """
 
-    def __init__(self,NumberOfSkills:int):
+    def __init__(self,MoraleBonus:int,DuelBonus:int,NumberOfSkills:int):
         """
         Initialiser function for a Duels Duellist.
 
         Arguments:
             WeaponType (str): What weapon the Duellist is wielding, determines DamageBonus.
         """
-        self.Morale:int = 30
-        self.DuelBonus:int = 0
+        self.Morale:int = 30 + MoraleBonus
+        self.OriginalMorale:int = 30 + MoraleBonus
+        self.DuelBonus:int = DuelBonus
+        self.OriginalDuelBonus:int = DuelBonus
         self.WeaponType = "None"
         self.DamageBonus:int = self.determine_damage_bonus()
         self.MinorInjuries:int = 0
@@ -85,10 +89,10 @@ class Duellist:
         Function to make a Duel Injury Roll after a Critical Strike.
         """
         InjuryRoll = random.randint(1,20) + self.InjuryRollBonus
-        if(InjuryRoll <= 2):
+        if(InjuryRoll <= 1):
             self.Deaths += 1
             self.Defeated = True
-        elif(InjuryRoll <= 4):
+        elif(InjuryRoll <= 3):
             self.CriticalInjuries += 1
             self.Defeated = True
         elif(InjuryRoll <= 8):
@@ -102,8 +106,8 @@ class Duellist:
         """
         Function to reset duellist to original values.
         """
-        self.Morale = 30
-        self.DuelBonus = 0
+        self.Morale = self.OriginalMorale
+        self.DuelBonus = self.OriginalDuelBonus
         self.DamageBonus = self.determine_damage_bonus()
         self.MinorInjuries = 0
         self.MajorInjuries = 0
