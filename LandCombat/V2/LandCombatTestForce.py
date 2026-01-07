@@ -10,7 +10,6 @@ class Force:
         Levies (int): The number of Levies in the force.
         Combat_Value (int): The combat strength of troops in the force.
         Morale (int): The morale/fighting spirit of troops in the force.
-        Retreat_Threshold (int): The morale at which the force will retreat at.
         Speed (int): The speed at which the force moves at.
         Casualties (int): Percentage of troops lost in battle.
         Strength_Bonus (int): The bonus to combat rolls received from the force having greater strength than the enemy.
@@ -18,7 +17,7 @@ class Force:
         Skill_Bonus (int): The bonus to combat rolls received from the force's commander.
     """
 
-    def __init__(self,MaA:int,Levies:int,RetreatThreshold:int):
+    def __init__(self,MaA:int,Levies:int):
         """
         Initialiser function for a Land Combat force.
     
@@ -31,7 +30,6 @@ class Force:
         self.Levies:int = Levies
         self.Combat_Value:int = self.calculate_combat_value(self.MaA,self.Levies)
         self.Morale:int = 100
-        self.Retreat_Threshold:int = RetreatThreshold
         self.Speed:int = self.calculate_speed(self.MaA,self.Levies)
         self.Casualties:int = 0
         self.Strength_Bonus:int = 0
