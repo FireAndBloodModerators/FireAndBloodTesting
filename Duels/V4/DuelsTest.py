@@ -10,7 +10,7 @@ SimulationCount = 100000
 print("Sims Start")
 
 ## Create list of skill combinations for testing use.
-SkillCombinationList = [["NoSkills",0,0,0],["T1Warrior",0,1,1],["T1Warrior/T2Warrior",0,2,2],["T1Warrior/T2Warrior/T3Warrior",0,4,3]]
+SkillCombinationList = [["NoSkills",0,0,0,0],["T1Warrior",0,1,0,1],["T1Warrior/T2Warrior",0,2,0,2],["T1Warrior/T2Warrior/T3Warrior",0,4,0,3],["T1Warrior/T1Brute/T2Warrior/T3Warrior",0,4,1,4],["T1Warrior/T1Brute/T2Warrior/T2Brute/T3Warrior",0,4,3,5]]
 
 ## Create column labels for later use
 SkillCombinationLabels = [f"Duellist w/ {SkillCombination[0]}" for SkillCombination in SkillCombinationList]
@@ -23,7 +23,7 @@ SkillCombinationDeathCritInjuryResults = []
 for SkillCombination1 in SkillCombinationList:
 
     #### Create Duellist 1
-    Duellist1 = Duellist(SkillCombination1[1],SkillCombination1[2],SkillCombination1[3])
+    Duellist1 = Duellist(SkillCombination1[1],SkillCombination1[2],SkillCombination1[3],SkillCombination1[4])
 
     #### Initialise new results lists
     NewInjuriesResults = [f"Duellist w/ {SkillCombination1[0]}"]
@@ -31,7 +31,7 @@ for SkillCombination1 in SkillCombinationList:
     for SkillCombination2 in SkillCombinationList:
 
         #### Create Duellist 2
-        Duellist2 = Duellist(SkillCombination2[1],SkillCombination2[2],SkillCombination2[3])
+        Duellist2 = Duellist(SkillCombination2[1],SkillCombination2[2],SkillCombination2[3],SkillCombination2[4])
 
         ##### Create variables to track wins and casualties
         Duellist1Deaths = 0

@@ -7,11 +7,12 @@ class Duellist:
     A class representing a Duels Duellist for r/FireAndBlood.
 
     Attributes:
-        Morale (int): The morale/fighting spirit of the Duellist.
         OriginalMorale (int): The original morale/fighting spirit of the Duellist, for resetting stats.
-        DuelBonus (int): The Duellist's bonus to Duel Rolls.
+        Morale (int): The morale/fighting spirit of the Duellist.
         OriginalDuelBonus (int) The Duellist's original bonus to Duel Rolls, for resetting stats.
+        DuelBonus (int): The Duellist's bonus to Duel Rolls.
         WeaponType (str): The weapon the Duellist is wielding.
+        OriginalDamageBonus (int): The Duellist's original bonus to Damage Rolls, for resetting stats.
         DamageBonus (int): The Duellist's bonus to Damage Rolls.
         MinorInjuries (int): The number of Minor Injuries the Duellist has taken.
         MajorInjuries (int): The number of Major Injuries the Duellist has taken.
@@ -20,18 +21,19 @@ class Duellist:
         Defeated (bool): Whether or not the Duellist is defeated.
     """
 
-    def __init__(self,MoraleBonus:int,DuelBonus:int,NumberOfSkills:int):
+    def __init__(self,MoraleBonus:int,DuelBonus:int,DamageBonus:int,NumberOfSkills:int):
         """
         Initialiser function for a Duels Duellist.
 
         Arguments:
             WeaponType (str): What weapon the Duellist is wielding, determines DamageBonus.
         """
-        self.Morale:int = 30 + MoraleBonus
         self.OriginalMorale:int = 30 + MoraleBonus
-        self.DuelBonus:int = DuelBonus
+        self.Morale:int = 30 + MoraleBonus
         self.OriginalDuelBonus:int = DuelBonus
+        self.DuelBonus:int = DuelBonus
         self.WeaponType = "None"
+        self.OriginalDamageBonus:int = DamageBonus
         self.DamageBonus:int = self.determine_damage_bonus()
         self.MinorInjuries:int = 0
         self.MajorInjuries:int = 0
@@ -48,15 +50,15 @@ class Duellist:
             int: The Duellist's Damage Bonus based on their weapon.
         """
         if(self.WeaponType == "VS"):
-            return 3
+            return 3 + self.OriginalDamageBonus
         elif(self.WeaponType == "MW/FO"):
-            return 2
+            return 2 + self.OriginalDamageBonus
         elif(self.WeaponType == "MW"):
-            return 1
+            return 1 + self.OriginalDamageBonus
         elif(self.WeaponType == "FO"):
-            return 1
+            return 1 + self.OriginalDamageBonus
         else:
-            return 0
+            return self.OriginalDamageBonus
 
     def duel_roll(self) -> tuple[int,bool]:
         """
@@ -89,10 +91,10 @@ class Duellist:
         Function to make a Duel Injury Roll after a Critical Strike.
         """
         InjuryRoll = random.randint(1,20) + self.InjuryRollBonus
-        if(InjuryRoll <= 1):
+        if(InjuryRoll <= 2):
             self.Deaths += 1
             self.Defeated = True
-        elif(InjuryRoll <= 3):
+        elif(InjuryRoll <= 4):
             self.CriticalInjuries += 1
             self.Defeated = True
         elif(InjuryRoll <= 8):
